@@ -1,0 +1,12 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Welcome to Campus-Connect</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <h1>Welcome to Campus-Connect</h1>
+    <a href="{{ url_for('login') }}"><button>Login</button></a>
+    <a href="{{ url_for('register') }}"><button>Register</button></a>
+</body>
+</html>

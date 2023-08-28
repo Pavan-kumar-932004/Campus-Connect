@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Seller Profile</title>
+</head>
+<body>
+    <h2>Seller Profile</h2>
+    <p>Name: {{ seller[1] }}</p>
+    <p>Roll Number: {{ seller[2] }}</p>
+    <!-- Display other details as needed -->
+
+    <!-- Display the image using a relative URL -->
+    <img src="{{ url_for('static', filename=seller[6]) }}" alt="ID Card Photo">
+    <p>Image Path: {{ seller[6] }}</p>
+
+    <a href="{{ url_for('buy_sell') }}">Back to Items for Sale</a>
+</body>
+</html>

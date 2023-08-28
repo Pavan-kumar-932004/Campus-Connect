@@ -1,0 +1,83 @@
+/* Reset some default styles */
+body, h1, h2, h3, p, ul, li {
+    margin: 0;
+    padding: 0;
+}
+
+/* Basic Typography */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f0f0f0;
+    color: #333;
+}
+
+/* Navigation Bar */
+nav {
+    background-color: #333;
+    color: white;
+    padding: 10px;
+}
+
+nav ul {
+    list-style: none;
+    display: flex;
+    justify-content: flex-end; /* Align navigation to the right */
+}
+
+nav ul li {
+    margin-right: 20px;
+}
+
+nav ul li a {
+    color: white;
+    text-decoration: none;
+}
+
+/* Card Container */
+.card-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 20px;
+    padding: 20px;
+}
+
+.card {
+    background-color: #fff;
+    border-radius: 10px;
+    padding: 20px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.card p {
+    margin-bottom: 10px;
+}
+
+/* Product Link */
+.product-link {
+    display: inline-block;
+    padding: 8px 16px;
+    background-color: #555;
+    color: white;
+    text-decoration: none;
+    border-radius: 5px;
+}
+
+/* Sell Button */
+.sell-button {
+    display: block;
+    position: fixed; /* Position it as fixed */
+    top: 20px; /* Space from top */
+    right: 20px; /* Space from right */
+    padding: 5px 10px; /* Adjust padding */
+    background-color: #ff9800;
+    color: white;
+    text-decoration: none;
+    border-radius: 5px;
+    font-size: 14px; /* Adjust font size */
+}
+
+.sell-button:hover,
+.product-link:hover {
+    background-color: #333;
+}

@@ -1,0 +1,27 @@
+{% extends "header.html" %}
+{% block content %}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>My Rental Items</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='buy_Sell-styles.css') }}">
+</head>
+<body>
+    <h2 style="text-align: center; padding: 50px;">My Rental Items</h2>
+    <div class="card-container">
+        {% for user_item in user_items %}
+            <div class="card">
+                <p>{{ user_item[1] }} - ${{ user_item[2] }} per day</p>
+                <p>Seller: {{ user_item[3] }}</p>
+                <form method="POST" action="{{ url_for('delete_item', item_id=user_item[0]) }}">
+                    <input type="submit" value="Delete">
+                </form>
+            </div>
+        {% endfor %}
+    </div>
+    
+    <a class="my-items-button" href="{{ url_for('buy_rent') }}">Go Back to Rent/Give for Rent</a>
+</body>
+</html>
+
+{% endblock %}

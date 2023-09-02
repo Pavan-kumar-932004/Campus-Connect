@@ -2,6 +2,8 @@ from flask import Flask, render_template, request, redirect, url_for, flash, ses
 from werkzeug.utils import secure_filename
 import os
 import mysql.connector
+from datetime import datetime
+
 
 app = Flask(__name__)
 
@@ -42,6 +44,30 @@ def create_items_table():
         id INT AUTO_INCREMENT PRIMARY KEY,
         item_name VARCHAR(255),
         item_price DECIMAL(10, 2),
+        seller_name VARCHAR(255)
+    )
+    """
+    cursor.execute(query)
+    db.commit()
+def create_rent_table():
+    query = """
+    CREATE TABLE IF NOT EXISTS rental_items (
+        id INT AUTO_INCREMENT PRIMARY KEY,
+        item_name VARCHAR(255),
+        item_price DECIMAL(10, 2),
+        seller_name VARCHAR(255)
+    )
+    """
+    cursor.execute(query)
+    db.commit()
+def job_postings():
+    query = """
+    CREATE TABLE IF NOT EXISTS job_postings (
+        id INT AUTO_INCREMENT PRIMARY KEY,
+        role_name VARCHAR(255) NOT NULL,
+        skills TEXT,
+        description TEXT NOT NULL,
+        duration VARCHAR(255) NOT NULL,
         seller_name VARCHAR(255)
     )
     """
@@ -116,7 +142,6 @@ def register():
 
     return render_template('register.html')
 
-
 @app.route('/user_profile')
 def user_profile():
     user_id = session.get('user_id')  # Get the user's ID from the session
@@ -149,7 +174,22 @@ def seller_profile(seller_name):
     else:
         flash("Seller details not found.", 'error')
         return redirect(url_for('buy_sell'))
-    
+
+
+@app.route('/hire_person_details/<string:seller_name>')
+def hire_person_details(seller_name):
+    # Fetch seller's details from the database based on seller_name
+    query = "SELECT * FROM users WHERE fullname = %s"
+    cursor.execute(query, (seller_name,))
+    seller_details = cursor.fetchone()
+
+    if seller_details:
+        return render_template('hire_person_details.html', seller=seller_details)
+    else:
+        flash("Seller details not found.", 'error')
+        return redirect(url_for('jobs'))
+
+
 
 
 @app.route('/buy_sell')
@@ -185,6 +225,174 @@ def sell_item():
 
     return render_template('sell_item.html')
 
+@app.route('/view_my_item/<int:item_id>')
+
+@app.route('/my_items')
+def my_items():
+    user_id = session.get('user_id')  # Get the user's ID from the session
+    if user_id:
+        # Fetch items posted by the user from the items_for_sale table
+        query = "SELECT * FROM items_for_sale WHERE seller_name = %s"
+        cursor.execute(query, (logged_in_fullname,))
+        user_items = cursor.fetchall()
+
+        return render_template('my_items.html', user_items=user_items)
+    else:
+        flash("Please log in to view your posted items.", 'error')
+        return redirect(url_for('login'))
+
+@app.route('/delete_item/<int:item_id>', methods=['POST'])
+def delete_item(item_id):
+    user_id = session.get('user_id')  # Get the user's ID from the session
+    if user_id:
+        # Check if the item with the specified ID belongs to the logged-in user
+        query = "SELECT seller_name FROM items_for_sale WHERE id = %s"
+        cursor.execute(query, (item_id,))
+        seller_name = cursor.fetchone()[0]
+
+        if seller_name == logged_in_fullname:
+            # Delete the item if it belongs to the logged-in user
+            query = "DELETE FROM items_for_sale WHERE id = %s"
+            cursor.execute(query, (item_id,))
+            db.commit()
+            flash("Item deleted successfully!", 'success')
+        else:
+            flash("You can only delete your own items.", 'error')
+    else:
+        flash("Please log in to delete items.", 'error')
+
+    return redirect(url_for('my_items'))
+
+
+
+@app.route('/buy_rent')
+def buy_rent():
+    # Fetch items for sale from the database
+    query = "SELECT * FROM rental_items"
+    cursor.execute(query)
+    items = cursor.fetchall()
+
+    # Create a list of items with additional seller information
+    updated_items = []
+    for item in items:
+        seller_name = item[3]  # Assuming seller_name is in the fourth column
+        updated_items.append((*item, seller_name))
+
+    # Pass the updated items to the template
+    return render_template('buy_rent.html', items=updated_items)
+
+
+@app.route('/give_rent_item', methods=['GET', 'POST'])
+def give_rent_item():
+    if request.method == 'POST':
+        item_name = request.form['item_name']
+        item_price = request.form['item_price']
+        
+        # Insert item details into the database
+        query = "INSERT INTO rental_items (item_name, item_price, seller_name) VALUES (%s, %s, %s)"
+        cursor.execute(query, (item_name, item_price, logged_in_fullname))
+        db.commit()
+
+        flash("Item added to market!", 'success')
+        return redirect(url_for('buy_rent'))
+
+    return render_template('give_rent_item.html')
+@app.route('/my_rental_items')
+def my_rental_items():
+    # Fetch rental items posted by the user from the rental_items table
+    query = "SELECT * FROM rental_items WHERE seller_name = %s"
+    cursor.execute(query, (logged_in_fullname,))
+    user_rental_items = cursor.fetchall()
+
+    return render_template('my_rental_items.html', user_rental_items=user_rental_items)
+@app.route('/delete_rental_item/<int:item_id>', methods=['POST'])
+def delete_rental_item(item_id):
+    # Delete the rental item from the database based on the item_id
+    query = "DELETE FROM rental_items WHERE id = %s AND seller_name = %s"
+    cursor.execute(query, (item_id, logged_in_fullname))
+    db.commit()
+
+    flash("Rental item deleted successfully!", 'success')
+    return redirect(url_for('my_rental_items'))
+
+# Route for posting a job
+@app.route('/post_job', methods=['GET', 'POST'])
+def post_job():
+    if request.method == 'POST':
+        role_name = request.form['role_name']
+        skills = request.form['skills']
+        description = request.form['description']
+        duration = request.form['duration']
+        
+        # Save the job details to the job_postings table in your database
+        query = "INSERT INTO job_postings (role_name, skills, description, duration, seller_name) VALUES (%s, %s, %s, %s, %s)"
+        cursor.execute(query, (role_name, skills, description, duration, logged_in_fullname))
+        db.commit()
+
+        flash("Job listing posted successfully!", 'success')
+        return redirect(url_for('jobs'))
+
+    return render_template('post_job.html')
+
+# Route for displaying all job postings
+@app.route('/jobs')
+def jobs():
+    # Fetch all job postings from the job_postings table
+    query = "SELECT * FROM job_postings"
+    cursor.execute(query)
+    job_postings = cursor.fetchall()
+   # print(job_postings)
+
+    return render_template('jobs.html', job_postings=job_postings)
+@app.route('/job_details/<int:job_id>')
+def job_details(job_id):
+    # Fetch job details from the database using the job_id
+    query = "SELECT * FROM job_postings WHERE id = %s"
+    cursor.execute(query, (job_id,))
+    job_details = cursor.fetchone()
+
+    return render_template('job_details.html', job_details=job_details)
+@app.route('/my_jobs')
+def my_jobs():
+    user_id = session.get('user_id')  # Get the user's ID from the session
+    if user_id:
+        # Fetch jobs posted by the user from the job_postings table
+        query = "SELECT * FROM job_postings WHERE seller_name = %s"
+        cursor.execute(query, (logged_in_fullname,))
+        user_jobs = cursor.fetchall()
+
+        return render_template('my_jobs.html', user_jobs=user_jobs)
+    else:
+        flash("Please log in to view your posted jobs.", 'error')
+        return redirect(url_for('login'))
+
+@app.route('/delete_job/<int:job_id>', methods=['POST'])
+def delete_job(job_id):
+    user_id = session.get('user_id')  # Get the user's ID from the session
+    if user_id:
+        # Delete the job with the specified ID if it belongs to the user
+        query = "DELETE FROM job_postings WHERE id = %s AND seller_name = %s"
+        cursor.execute(query, (job_id, logged_in_fullname))
+        db.commit()
+        flash("Job deleted successfully!", 'success')
+    else:
+        flash("Please log in to delete jobs.", 'error')
+
+    return redirect(url_for('my_jobs'))
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 @app.route('/view_product/<int:item_id>')
 def view_product(item_id):
@@ -195,6 +403,14 @@ def view_product(item_id):
 
     return render_template('view_product.html', item=item)
 
+@app.route('/view_product_2/<int:item_id>')
+def view_product_2(item_id):
+    # Fetch item details from the database based on item_id
+    query = "SELECT * FROM rental_items WHERE id = %s"
+    cursor.execute(query, (item_id,))
+    item = cursor.fetchone()
+
+    return render_template('view_product_2.html', item=item)
 
 
 
@@ -206,5 +422,7 @@ def dashboard():
 
 if __name__ == '__main__':
     create_users_table()
-    create_items_table()  
+    create_items_table() 
+    create_rent_table() 
+    job_postings()
     app.run(debug=True)

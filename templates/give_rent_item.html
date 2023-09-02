@@ -1,0 +1,19 @@
+{% extends "header.html" %}
+{% block content %}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Sell Item</title>
+</head>
+<body>
+    <h1>Sell an Item</h1>
+    <form method="POST">
+        <label for="item_name">Item Name:</label>
+        <input type="text" id="item_name" name="item_name" required><br>
+        <label for="item_price">Item Rent per day :</label>
+        <input type="number" id="item_price" name="item_price" required><br>
+        <input type="submit" value="Add Item">
+    </form>
+</body>
+</html>
+{% endblock %}

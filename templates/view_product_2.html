@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>View Product</title>
+</head>
+<body>
+    <h2>Product Details</h2>
+    <p>Name: {{ item[1] }}</p>
+    <p>Price: {{ item[2] }}</p>
+    <!-- Add more details here as needed -->
+
+    <!-- Add the "View Seller Profile" button -->
+    <a href="{{ url_for('seller_profile', seller_name=item[3]) }}">View Seller Profile</a>
+
+    
+    <br><br>
+    <a href="{{ url_for('buy_rent') }}">Back to Items for Sale</a>
+</body>
+</html>

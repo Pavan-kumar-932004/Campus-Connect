@@ -1,0 +1,29 @@
+{% extends "header.html" %}
+{% block content %}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Available Jobs</title>
+    <link rel="stylesheet" type="text/css" href="styles.css">
+</head>
+<body>
+    <h1>Available Jobs</h1>
+
+    <ul>
+        {% for job in job_postings %}
+            <li>{{ job[1] }}</li>
+            <p>Skills: {{ job[2] }}</p>
+            <p>Duration: {{ job[4] }}</p>
+            <a href="{{ url_for('my_jobs') }}">My Posted Jobs</a>
+
+            <!-- Add a "View Details" button with a link to the details page -->
+            <a href="{{ url_for('job_details', job_id=job[0]) }}">View Details</a>
+            <hr>
+        {% endfor %}
+    </ul>
+
+    <!-- Button to create a new job listing -->
+    <a href="{{ url_for('post_job') }}">Post a Job</a>
+</body>
+</html>
+{% endblock %}

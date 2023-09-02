@@ -1,0 +1,24 @@
+{% extends "header.html" %}
+{% block content %}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Rent/Give for Rent</title>
+  </head>
+<body>
+    <h2 style="text-align: center; padding: 50px;">Items for Rent</h2>
+    <div class="card-container">
+        {% for item in items %}
+            <div class="card">
+                <p>{{ item[1] }} - ${{ item[2] }} per day</p>
+                <p>Seller: {{ item[3] }}</p>
+                <a class="product-link" href="{{ url_for('view_product_2', item_id=item[0]) }}">View Product</a>
+            </div>
+        {% endfor %}
+    </div>
+    
+    <a class="sell-button" href="{{ url_for('give_rent_item') }}">Sell an Item</a>
+    <a class="my-items-button" href="{{ url_for('my_rental_items') }}">My Rental Items</a>
+</body>
+</html>
+{% endblock %}

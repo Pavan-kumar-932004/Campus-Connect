@@ -1,3 +1,5 @@
+{% extends "header.html" %}
+{% block content %}
 <!DOCTYPE html>
 <html>
 <head>
@@ -5,9 +7,7 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='buy_Sell-styles.css') }}">
 </head>
 <body>
-
-    
-    <h2 style="text-align: center;padding: 50px;">Items for Sale</h2>
+    <h2 style="text-align: center; padding: 50px;">Items for Sale</h2>
     <div class="card-container">
         {% for item in items %}
             <div class="card">
@@ -17,7 +17,10 @@
             </div>
         {% endfor %}
     </div>
-    
     <a class="sell-button" href="{{ url_for('sell_item') }}">Sell an Item</a>
+
+    <!-- Add a button to view your item posts -->
+    <a class="view-my-items-button" href="{{ url_for('my_items') }}">View My Item Posts</a>
 </body>
 </html>
+{% endblock %}

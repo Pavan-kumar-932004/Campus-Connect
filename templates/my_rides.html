@@ -1,0 +1,31 @@
+<!-- my_rides.html -->
+<!DOCTYPE html>
+<html>
+<head>
+    <title>My Rides</title>
+</head>
+<body>
+    <h1>My Rides</h1>
+
+    <table>
+        <tr>
+            <th>Start Location</th>
+            <th>Start Time</th>
+            <th>Price</th>
+            <th>Action</th>
+        </tr>
+        {% for ride in user_rides %}
+            <tr>
+                <td>{{ ride[1] }}</td>
+                <td>{{ ride[2] }}</td>
+                <td>{{ ride[3] }}</td>
+                <td>
+                    <form method="POST" action="{{ url_for('delete_ride', ride_id=ride[0]) }}">
+                        <button type="submit" class="btn btn-danger">Delete</button>
+                    </form>
+                </td>
+            </tr>
+        {% endfor %}
+    </table>
+</body>
+</html>

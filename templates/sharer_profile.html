@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Seller Profile</title>
+</head>
+<body>
+    <h2>Seller Profile</h2>
+    <p>Name: {{ seller[1] }}</p>
+    <p>Roll Number: {{ seller[2] }}</p>
+    <p>Phone Number: {{ seller[4] }}</p>
+    <!-- Display other details as needed -->
+
+    <!-- Display the image using a relative URL -->
+    <img src="{{ url_for('static', filename=seller[6]) }}" alt="ID Card Photo">
+    <p>Image Path: {{ seller[6] }}</p>
+    <img src="c:/Users/sriyo/Desktop/Campus-Connect/static/uploads/img.png">
+    
+    <a href="{{ url_for('view_rides') }}">Back to View Rides</a></br>
+
+    <b> If you like the deal, You can call the Ride Provider</b>
+</body>
+</html>

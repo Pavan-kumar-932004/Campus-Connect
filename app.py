@@ -74,6 +74,19 @@ def job_postings():
     cursor.execute(query)
     db.commit()
 
+def create_rides_table():
+    query = """
+    CREATE TABLE IF NOT EXISTS rides (
+        id INT AUTO_INCREMENT PRIMARY KEY,
+        start_location VARCHAR(255) NOT NULL,
+        start_time VARCHAR(50) NOT NULL,
+        price FLOAT NOT NULL,
+        seller_name VARCHAR(255)
+    )
+    """
+    cursor.execute(query)
+    db.commit()
+
 
 
 
@@ -381,6 +394,78 @@ def delete_job(job_id):
     return redirect(url_for('my_jobs'))
 
 
+@app.route('/view_rides')
+def view_rides():
+    # Fetch ride details from the rides table
+    query = "SELECT * FROM rides"
+    cursor.execute(query)
+    rides = cursor.fetchall()
+    
+    return render_template('view_rides.html', rides=rides)
+@app.route('/share_vehicle', methods=['GET', 'POST'])
+def share_vehicle():
+    if request.method == 'POST':
+        start_location = request.form['start_location']
+        start_time = request.form['start_time']
+        price = request.form['price']
+
+        # Insert the ride details into the rides table
+        query = "INSERT INTO rides (start_location, start_time, price, seller_name) VALUES (%s, %s, %s,%s)"
+        cursor.execute(query, (start_location, start_time, price, logged_in_fullname))
+        db.commit()
+
+        flash("Vehicle availability posted successfully!", 'success')
+        return redirect(url_for('share_vehicle'))
+
+    # Fetch ride details from the rides table
+    query = "SELECT * FROM rides"
+    cursor.execute(query)
+    rides = cursor.fetchall()
+
+    return render_template('share_vehicle.html', rides=rides)
+@app.route('/sharer_profile/<string:seller_name>')
+def sharer_profile(seller_name):
+    # Fetch seller's details from the database based on seller_name
+    query = "SELECT * FROM users WHERE fullname= %s"
+    cursor.execute(query, (seller_name,))
+    seller_details = cursor.fetchone()
+
+    if seller_details:
+        return render_template('sharer_profile.html', seller=seller_details)
+    else:
+        flash("Seller details not found.", 'error')
+        return redirect(url_for('buy_sell'))
+
+@app.route('/my_rides')
+def my_rides():
+    user_id =session.get('user_id')  # Get the user's ID from the session
+    if user_id:
+        # Fetch rides posted by the user from the rides table
+        query = "SELECT * FROM rides WHERE seller_name = %s"
+        cursor.execute(query, (logged_in_fullname,))
+        user_rides = cursor.fetchall()
+
+        return render_template('my_rides.html', user_rides=user_rides)
+    else:
+        flash("Please log in to view your posted rides.", 'error')
+        return redirect(url_for('login'))
+
+
+@app.route('/delete_ride/<int:ride_id>', methods=['POST'])
+def delete_ride(ride_id):
+    user_id = session.get('user_id')  # Get the user's ID from the session
+    if user_id:
+        # Delete the job with the specified ID if it belongs to the user
+        query = "DELETE FROM rides WHERE id = %s AND seller_name = %s"
+        cursor.execute(query, (ride_id, logged_in_fullname))
+        db.commit()
+        flash("Ride deleted successfully!", 'success')
+    else:
+        flash("Please log in to delete Rides.", 'error')
+
+    return redirect(url_for('my_rides'))
+
+
 
 
 
@@ -425,4 +510,5 @@ if __name__ == '__main__':
     create_items_table() 
     create_rent_table() 
     job_postings()
+    create_rides_table()
     app.run(debug=True)

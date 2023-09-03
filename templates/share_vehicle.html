@@ -1,0 +1,30 @@
+<!-- share_vehicle.html -->
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Share Vehicle</title>
+</head>
+<body>
+    <h1>Share Vehicle</h1>
+    <a href="{{ url_for('my_rides') }}" class="btn btn-primary">My Rides</a>
+    <!-- Form to post vehicle availability -->
+    <form method="POST" action="/share_vehicle">
+        <label for="start_location">End Location:</label>
+        <input type="text" id="start_location" name="start_location" required><br>
+        <label for="start_time">Start Time:</label>
+        <input type="text" id="start_time" name="start_time" required><br>
+        <label for="price">Price:</label>
+        <input type="text" id="price" name="price" required><br>
+        <input type="submit" value="Share Vehicle">
+    </form>
+
+    <h2>Available Vehicles</h2>
+    <ul>
+        {% for ride in rides %}
+            <li>Location: {{ ride[1] }} - Time: {{ ride[2] }} - Price: {{ ride[3]}}</li>
+            <li>Posted by : {{ride[4]}}</li>
+            <a href="{{ url_for('sharer_profile', seller_name=ride[4]) }}">View Details about Ride Provider</a>
+        {% endfor %}
+    </ul>
+</body>
+</html>

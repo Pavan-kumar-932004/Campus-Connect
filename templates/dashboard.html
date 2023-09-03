@@ -1,14 +1,23 @@
 <!-- dashboard.html -->
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles/dashboard.css') }}">
     <title>Dashboard</title>
 </head>
 <body>
-    <h1>Welcome to Your Dashboard</h1>
-    <a href="{{ url_for('buy_sell') }}">Buy/Sell</a><br>
-    <a href="{{ url_for('buy_rent') }}">Rent/Give</a><br>
-    <a href="{{ url_for('jobs') }}">Hire/Get Hired</a><br>
-    <a href="/share_vehicle">Share Vehicle</a><br>
+    <div class="container">
+        <h1>Welcome to  Campus-Connect</h1>
+        <div class="button-row">
+            <a class="button" href="{{ url_for('buy_sell') }}">Buy/Sell</a>
+            <a class="button" href="{{ url_for('buy_rent') }}">Rent/Give</a>
+        </div>
+        <div class="button-row">
+            <a class="button" href="{{ url_for('jobs') }}">Hire/Get Hired</a>
+            <a class="button" href="/share_vehicle">Share Vehicle</a>
+        </div>
+    </div>
 </body>
 </html>

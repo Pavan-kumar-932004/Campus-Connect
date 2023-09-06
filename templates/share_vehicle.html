@@ -21,9 +21,9 @@
     <h2>Available Vehicles</h2>
     <ul>
         {% for ride in rides %}
-            <li>Location: {{ ride[1] }} - Time: {{ ride[2] }} - Price: {{ ride[3]}}</li>
-            <li>Posted by : {{ride[4]}}</li>
-            <a href="{{ url_for('sharer_profile', seller_name=ride[4]) }}">View Details about Ride Provider</a>
+            <li>Location: {{ ride[1] }} - Time: {{ ride[2] }} - Price: {{ ride[3] }}</li>
+            <li>Posted by: {{ ride[4] }}</li>
+            <li><a href="{{ url_for('sharer_profile', seller_name=ride[4]) }}">View Details about Ride Provider</a></li>
         {% endfor %}
     </ul>
 </body>

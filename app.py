@@ -95,10 +95,11 @@ def create_rides_table():
 @app.route('/')
 def index():
     return render_template('index.html')
-
 @app.route('/login', methods=['GET', 'POST'])
 def login():
     global logged_in_fullname
+  # Store user's full name in session
+
     if request.method == 'POST':
         rollnumber = request.form['rollnumber']
         password = request.form['password']
@@ -108,8 +109,8 @@ def login():
         user = cursor.fetchone()
 
         if user:
-            logged_in_fullname = user[1]
             session['user_id'] = user[0]  # Store user ID in session
+            session['logged_in_fullname'] = user[1]  # Store user's full name in session
             flash("Login successful!", 'success')
             return redirect(url_for('dashboard'))
         else:
@@ -340,12 +341,13 @@ def post_job():
         # Save the job details to the job_postings table in your database
         query = "INSERT INTO job_postings (role_name, skills, description, duration, seller_name) VALUES (%s, %s, %s, %s, %s)"
         cursor.execute(query, (role_name, skills, description, duration, logged_in_fullname))
-        db.commit()
+        db.commit()  # Commit the changes to the database
 
         flash("Job listing posted successfully!", 'success')
         return redirect(url_for('jobs'))
 
     return render_template('post_job.html')
+
 
 # Route for displaying all job postings
 @app.route('/jobs')
@@ -396,44 +398,60 @@ def delete_job(job_id):
 
 @app.route('/view_rides')
 def view_rides():
-    # Fetch ride details from the rides table
-    query = "SELECT * FROM rides"
-    cursor.execute(query)
-    rides = cursor.fetchall()
-    
-    return render_template('view_rides.html', rides=rides)
+    try:
+        # Query to fetch ride details
+        query = "SELECT * FROM rides"
+        cursor.execute(query)
+        rides = cursor.fetchall()  # Consume the result set
+
+        return render_template('view_rides.html', rides=rides)
+    except Exception as e:
+        flash("An error occurred while fetching ride details.", 'error')
+        return redirect(url_for('dashboard'))
 @app.route('/share_vehicle', methods=['GET', 'POST'])
 def share_vehicle():
+    logged_in_fullname = session.get('logged_in_fullname')  # Retrieve full name from session
+
     if request.method == 'POST':
         start_location = request.form['start_location']
         start_time = request.form['start_time']
         price = request.form['price']
+        seller_name = logged_in_fullname
 
-        # Insert the ride details into the rides table
-        query = "INSERT INTO rides (start_location, start_time, price, seller_name) VALUES (%s, %s, %s,%s)"
-        cursor.execute(query, (start_location, start_time, price, logged_in_fullname))
-        db.commit()
+        try:
+            # Insert the ride details into the rides table
+            query = "INSERT INTO rides (start_location, start_time, price, seller_name) VALUES (%s, %s, %s, %s)"
+            cursor.execute(query, (start_location, start_time, price, seller_name))
+            db.commit()  # Commit the transaction after executing the query
+            flash("Vehicle availability posted successfully!", 'success')
+            return redirect(url_for('share_vehicle'))
+        except Exception as e:
+            db.rollback()  # Roll back the transaction in case of an error
+            flash("An error occurred while posting vehicle availability.", 'error')
+            return redirect(url_for('share_vehicle'))
+    else:
+        # Fetch ride details from the rides table
+        query = "SELECT * FROM rides"
+        cursor.execute(query)
+        rides = cursor.fetchall()
 
-        flash("Vehicle availability posted successfully!", 'success')
-        return redirect(url_for('share_vehicle'))
+        return render_template('share_vehicle.html', rides=rides)
 
-    # Fetch ride details from the rides table
-    query = "SELECT * FROM rides"
-    cursor.execute(query)
-    rides = cursor.fetchall()
-
-    return render_template('share_vehicle.html', rides=rides)
 @app.route('/sharer_profile/<string:seller_name>')
 def sharer_profile(seller_name):
-    # Fetch seller's details from the database based on seller_name
-    query = "SELECT * FROM users WHERE fullname= %s"
-    cursor.execute(query, (seller_name,))
-    seller_details = cursor.fetchone()
+    try:
+        # Fetch seller's details from the database based on seller_name
+        query = "SELECT * FROM users WHERE fullname= %s"
+        cursor.execute(query, (seller_name,))
+        seller_details = cursor.fetchall()
 
-    if seller_details:
-        return render_template('sharer_profile.html', seller=seller_details)
-    else:
-        flash("Seller details not found.", 'error')
+        if seller_details:
+            return render_template('sharer_profile.html', seller=seller_details)
+        else:
+            flash("Seller details not found.", 'error')
+            return redirect(url_for('buy_sell'))
+    except Exception as e:
+        flash("An error occurred while fetching seller details.", 'error')
         return redirect(url_for('buy_sell'))
 
 @app.route('/my_rides')

@@ -14,9 +14,86 @@
             background-color: #f8f9fa;
         }
         .jumbotron {
-            background-color: #562465;
+            background-color: #021B37;
             color: #ffffff;
         }
+        .button-next{
+            width:400px;
+            border-radius: 5px;
+            box-shadow: 2px 2px 10px grey;
+            margin:5px;
+        }
+        #about{
+            margin-top:70px;
+        }
+        #about_img{
+            
+            border-radius: 10px;
+        }
+        #about-info{
+            right:0px;
+            width:500px;
+        }
+        article{
+            text-align: justify;
+            width:500px;
+        }
+        /* Custom CSS for the flexbox container */
+.container1 {
+    display: flex;
+    position:relative;
+    align-items: center; 
+    margin-top: 20px; 
+    left:180px;
+}
+
+
+.item {
+    padding: 5px;
+    background-color: #021B37;
+    border: 1px solid #ccc;
+    width:300px;
+    color:white;
+    border-radius: 8px;
+    height:200px;
+}
+
+header{
+    font-size: 30px;
+    margin-top: 40px;
+    font-weight: 500;
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    margin-bottom: 20px;
+}
+.matter{
+    background-color: aliceblue;
+    color: black;
+    text-align: justify;
+    padding:10px;
+    font-family: 'Times New Roman', Times, serif;
+    height:100px;
+    font-size: 18px;
+    transition: 2s height;
+}
+.matter:hover{
+    height:150px;
+}
+#contact{
+    bottom:0px;
+    left:0px;
+    right:0px;
+    position: relative;
+    width:100%;
+    background-color: #021B37;
+    height:200px;
+    margin-top: 100px;
+    color:white;
+    font-size: 18px;
+    font-weight: bold;
+}
+a{
+    color:white;
+}
     </style>
 </head>
 <body>
@@ -32,13 +109,13 @@
                     <a class="nav-link" href="#">Home</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#">About</a>
+                    <a class="nav-link" href="#about-info">About</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#">Services</a>
+                    <a class="nav-link" href="#services-provided">Services</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#">Contact</a>
+                    <a class="nav-link" href="#contact">Contact</a>
                 </li>
             </ul>
         </div>
@@ -53,8 +130,60 @@
 
     <!-- Main Content Section -->
     <div class="container">
-        
+       <div class="button">
+       <center><button type="submit" class="button-next">Login</button>
+        <button type="submit" class="button-next">Register</button></center> 
+       </div> 
     </div>
+    <div class="container" id="about">
+        <div class="row">
+            <div class="col-md-4">
+                <img src="https://lh3.googleusercontent.com/DPeBv6ouR4sDGi-3uDSJsN-0LaGLaZO_XpQoJYIZQpS020Ea4TK-Hf9EbnQU_prDUUjZgi3jhisOjziBRFAN-sExTwnOEtJUINo1efdq" width="300px" height="300px" id="#about-img">
+            </div>
+        
+            <div class="col-md-4">
+                <h2>About</h2>
+                <article id="about-info">Campus Connect" is a dedicated online platform designed to enhance the college experience by enabling students to efficiently share resources and arrange local rides within the college premises. With "Campus Connect," students can easily lend or borrow items like calculators, textbooks, and study materials, reducing unnecessary expenses and promoting resource sustainability. Additionally, the platform simplifies transportation by allowing students to request or offer rides for nearby destinations, fostering a sense of community and convenience within the college environment. "Campus Connect" aims to streamline resource sharing, save money, and make college life smoother for all students.</article>
+            </div>
+        </div>
+    </div>
+
+        <div class="container1">
+            <center>
+                <header id="services-provided">Services</header>
+                <hr width="100px">
+            <div class="row">
+                <div class="col">
+                    <div class="item">RENT ITEMS
+                        <div class="matter">People can rent the materials from peers for a specific period of time</div>
+                    </div>
+                    
+                </div>
+                <div class="col">
+                    <div class="item">BUY/SELL
+                        <div class="matter">People can buy or rent the materials from peers. Details of the seller will be shared to the buyer.</div>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="item">COLLABORATE
+                        <div class="matter">Developers can collaborate with the others regarding projects, hackathons or coding competitions.</div>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="item">REQUEST RIDE
+                        <div class="matter">This is a unique one where in a person can request for a particular ride to a location.</div>
+                    </div>
+                </div>
+            </div>
+        </center>
+        </div>
+    <div id="contact">
+         Contact:&emsp;9014802971, 8520955981, 7674935765, 9990860298<br><br>
+         Mail:&emsp;<a href="www.google.com">iamdheeraj2614@gmail.com</a>
+    </div>
+    
+
+    
 
     <!-- Link to Bootstrap and jQuery JavaScript libraries -->
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>

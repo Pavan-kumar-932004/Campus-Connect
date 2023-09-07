@@ -3,18 +3,200 @@
 <head>
     <title>Login</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <style>
+            .login{
+                margin-top: 50px;
+            }
+        .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center; 
+            border-radius: 20px;
+          }
+          .item {
+            padding:20px;
+            flex: 2; 
+            border: 1px solid ;
+            border-radius: 6px;
+            width: 620px;
+            height: 470px;
+          }
+          body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color:#DCE8E7;
+            margin-top: 200px;
+          }
+        #item1{
+            
+            background-color: white;
+            min-width: 380px;
+        }
+        #item2{
+            background-color: #562465;
+            max-width: 200px;
+            padding: 0px;
+            min-height: 510px;}
+        
+        header{
+            font-size: 30px;
+            font-family: Open sans-serif;
+            padding-left:30px;
+            
+        }
+        input#name,input#password{
+        
+            margin-top:20px;
+            padding: 10px;
+            min-width: 200px;
+            border-radius: 5px;
+            margin-top: 20px;
+            color:black;
+            font-family: 'Times New Roman', Times, serif;
+            font-size:16px;
+        }
+        input{
+            margin:20px;
+            border:0.5px solid
+        }
+        ::placeholder{
+            color: black;
+        }
+        button#google-signin-btn{
+         margin-left: 30px;  
+         justify-content: space-between; 
+         font-size: 15px;
+         border-radius: 5px;
+         margin-top:15px;
+         font-family:'Times New Roman', Times, serif;
+         background-color: white;
+        }
+        button#submit{
+           padding:8px;
+           margin-top:8px;
+           min-width:60px;
+           margin-left:20px;
+           border-radius:9px; 
+           font-family:'Times New Roman', Times, serif;
+           font-size: 16px;
+           background-color: white;
+        }
+        img#logo{
+            border-radius: 4px;
+            padding:30px;
+            width: 160px;
+            height:200px;
+            
+        }
+        button:hover{
+            
+            transition-duration: 5s;
+            translate: 5s ease-in;
+        }
+        
+        .slant-container{
+            position: relative;
+            overflow: hidden;
+            background: #FFF200; /* Set your desired gradient colors */
+            transform: skewY(-35deg); /* Adjust the degree to control the slant angle */
+            margin-top: 100px; /* Adjust as needed */
+            color:#FFF200;
+          }
+          
+          /* Create a pseudo-element for the slanted background */
+          .slant-container::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -50%; /* Adjust to match the skew */
+            width: 100%; /* Adjust to cover the entire container width */
+            height: 100%;
+            background: inherit; /* Inherit the background from the parent */
+            transform: skewY(20deg); /* Counter the skew on the parent */
+            z-index: -1; /* Place the pseudo-element below the content */
+          }
+          .slant-container#second{
+            position: relative;
+            overflow: hidden;
+            background: #FFF200; /* Set your desired gradient colors */
+            transform: skewY(16deg); /* Adjust the degree to control the slant angle */
+            margin-top:10px; /* Adjust as needed */
+            color:#FFF200;
+          }
+        img#logo{
+            border-radius: 10px;
+            
+        
+        }
+        .slant-container#third{
+          position: relative;
+          overflow: hidden;
+          background: #FFF200; /* Set your desired gradient colors */
+          transform: skewY(-5deg); /* Adjust the degree to control the slant angle */
+          margin-top:10px; /* Adjust as needed */
+          color:#FFF200;
+        }
+        .second-block{
+          background-color: blue;
+          bottom: 0;
+          position: relative;
+          padding: 0;
+          height: 150;
+        }
+                </style>
 </head>
 <body>
-    <h1>Login</h1>
+    <!--<h1>Login</h1>
     <form method="POST">
         <label for="rollnumber">Roll Number:</label>
-        <input type="text" id="rollnumber" name="rollnumber" required><br>
+        <input type="text" id="name" name="rollnumber" required><br>
         
         <label for="password">Password:</label>
         <input type="password" id="password" name="password" required><br>
         
         <input type="submit" value="Login">
-    </form>
-    <a href="{{ url_for('register') }}">Don't have an account? Register here</a>
+    </form>-->
+    
+    <div class="container">
+        <div class="item" id="item1">
+          <form id="login" method="POST">
+              <header>Welcome Back!</header>
+              <hr width="500px" color="darkgreen">
+              <label for="rollnumber">Roll Number:</label>
+              <input type="text" id="name" name="rollnumber" required><br>
+
+              <label for="password">Password:</label>&emsp;
+              <input type="password" id="password" name="password" required><br>
+
+              <button type="submit" id="submit"><a>Submit</a></button><br>
+              <center><font size="5">or</font></center>
+              <hr width="200px">
+              <button id="google-signin-btn" type="button" class="log"><img src="../images/google.png" height="20px" width="25px">&emsp;Sign in with Google</button><br>
+              <button id="google-signin-btn" type="button" class="log"><img src="../images/facebook.png" height="20px" width="25px">&emsp;Sign in with Facebook</button>
+          </form>
+          <br>
+          <a href="{{ url_for('register') }}">Don't have an account? Register here</a>
+          <script src="script.js"></script>
+        </div>
+        
+        <div class="item" id="item2">
+          <img src="../images/campus-Connect.jpg" id="logo">
+          <!--<div class="second-block">
+          <div class="slant-container">
+              hjllj
+          </div>
+          <div class="slant-container" id="second">
+              hjllj
+          </div>-->
+      </div>
+          <!--<div class="slant-container" id="third">
+              hjllj
+          </div>-->
+
+        </div>
+        
+
+    </div>
 </body>
 </html>

@@ -62,7 +62,7 @@ a:hover {
   margin: auto;
   padding-top: 68px;
   padding-bottom: 48px;
-  background: url("images/Background for register.png"); 
+  background: url(".."); 
 }
   .inner h3 {
     text-transform: uppercase;
@@ -226,46 +226,43 @@ button {
 
 		<div class="wrapper" style="background-image: url('images/Background for register.png');">
 			<div class="inner">
-				<form action="">
+        <form method="POST" action="/register" enctype="multipart/form-data">
 					<h3><br>Registration Form</h3><br><br><br><br><br>
 					<div class="form-group">
 						<div class="form-wrapper">
-							<label for="">First Name</label>
-							<input type="text" class="form-control">
-						</div>
-						<div class="form-wrapper">
-							<label for="">Last Name</label>
-							<input type="text" class="form-control">
+              <label for="fullname">Full Name:</label>
+              <input type="text" id="fullname" name="fullname" required class="form-control"><br>
 						</div>
 					</div>
 					<div class="form-wrapper">
-						<label for="">Email</label>
-						<input type="text" class="form-control">
+            <label for="email">Email:</label>
+            <input type="email" id="email" name="email" required class="form-control"><br>
 					</div>
-					<div class="form-wrapper">
-					    <label for="college">College:</label>
-                        <select id="college" class="form-control" name="college" required>
-                        <option value="VIIT">Vignan Institute of Information Technology</option>
-                        <option value="VIPT">Vignan Institute of Pharmacetucal Technology</option>
-                        <option value="VIEW">Vignan Institute of Engineering for Women</option>
-					    </select><br>
-			        </div>
+       
 					<div class="form-wrapper">
 					    <label for="register-number">Register Number:</label>
-                        <input type="text" id="register-number" class="form-control" required><br>
+                <input type="text" id="rollnumber" name="rollnumber" required class="form-control"><br>
+  
 				    </div>
+            <div class="form-wrapper">
+            <label for="phonenumber">Phone Number:</label>
+            <input type="text" id="phonenumber" name="phonenumber" class="form-control" required><br>
+          </div>
+
+          <div class="form-wrapper">
+        <label for="branch">Branch:</label>
+        <input type="text" id="branch" name="branch" class="form-control" required><br>
+      </div>
+
 					<div class="form-wrapper">
-					    <label for="college-id-photo">College ID Photo:</label>
-                        <input type="file" id="college-id-photo" class="form-control" accept="image/*" required><br>
-					</div>
+                        <label for="idcardphoto">ID Card Photo:</label>
+                        <input type="file" id="college-id-photo" name="idcardphoto" accept="image/*" required><br>
+          </div>
 					<div class="form-wrapper">
-						<label for="">Password</label>
-						<input type="password" class="form-control">
+        <label for="password">Password:</label>
+        <input type="password" class="form-control" id="password" name="password" required><br>
 					</div>
-					<div class="form-wrapper">
-						<label for="">Confirm Password</label>
-						<input type="password" class="form-control">
-					</div>
+
 					<div class="checkbox">
 						<label>
 							<input type="checkbox"> I accept the Terms of Use & Privacy Policy.
@@ -278,4 +275,44 @@ button {
 		</div>
 		
 	</body>
+</html>
+
+
+
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Register</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <h1>Register</h1>
+    <form method="POST" action="/register" enctype="multipart/form-data">
+
+        <label for="fullname">Full Name:</label>
+        <input type="text" id="fullname" name="fullname" required><br>
+        
+        <label for="rollnumber">Roll Number:</label>
+        <input type="text" id="rollnumber" name="rollnumber" required><br>
+        
+        <label for="branch">Branch:</label>
+        <input type="text" id="branch" name="branch" required><br>
+        
+        <label for="phonenumber">Phone Number:</label>
+        <input type="text" id="phonenumber" name="phonenumber" required><br>
+        
+        <label for="email">Email:</label>
+        <input type="email" id="email" name="email" required><br>
+        
+        <label for="idcardphoto">ID Card Photo:</label>
+        <input type="file" id="idcardphoto" name="idcardphoto" accept="image/*" required><br>
+        
+        <label for="password">Password:</label>
+        <input type="password" id="password" name="password" required><br>
+        
+        
+    </form>
+    <a href="{{ url_for('login') }}">Already have an account? Login here</a>
+</body>
 </html>

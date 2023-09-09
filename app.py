@@ -132,18 +132,26 @@ def register():
         branch = request.form['branch']
         phonenumber = request.form['phonenumber']
         email = request.form['email']
-        idcardphoto = request.files['idcardphoto']  # Get the uploaded file
+        idcardphoto = request.files['idcardphoto']
         password = request.form['password']
 
         if idcardphoto:
+            try:
                 # Generate a unique filename using a timestamp
                 current_time = datetime.now().strftime("%Y%m%d%H%M%S")
                 filename = f"{current_time}_{secure_filename(idcardphoto.filename)}"
-                
-                image_path = os.path.join(app.root_path, 'static', 'uploads', filename).replace("\\", "/")
-                idcardphoto.save(image_path)
 
-                # Store the image path in the database
+                # Create the directory if it doesn't exist
+                image_dir = os.path.join(app.root_path, 'static', 'uploads')
+                os.makedirs(image_dir, exist_ok=True)
+
+                # Construct the relative path
+                image_path = f"../static/uploads/{filename}"
+
+                # Save the image using the relative path
+                idcardphoto.save(os.path.join(image_dir, filename).replace("\\", "/"))
+
+                # Store the relative image path in the database
                 query = """
                 INSERT INTO users (fullname, rollnumber, branch, phonenumber, email, idcardphoto, password)
                 VALUES (%s, %s, %s, %s, %s, %s, %s)
@@ -153,6 +161,8 @@ def register():
 
                 flash("Registration successful! You can now log in.", 'success')
                 return redirect(url_for('login'))
+            except Exception as e:
+                flash(f"Error: {str(e)}", 'error')
 
     return render_template('register.html')
 

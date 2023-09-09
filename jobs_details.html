@@ -1,4 +1,3 @@
-{% block content %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -303,22 +302,32 @@ body {
 	left: calc(100% - (25px - 4px) - 2px);
 }
 /* NAVBAR */
-.product-image {
-    width: 150px; /* Set your desired width */
-    height: 150px; /* Set your desired height */
-    object-fit: cover; /* Maintain aspect ratio and cover the container */
-    border-radius: 10px; /* Add rounded corners if desired */
-}
 
 /* MAIN */
+/* Add a border around the main section */
 #content main {
-	width: 100%;
+    width: 100%;
     height: 100%;
-	padding: 36px 24px;
-	font-family: var(--poppins);
-	max-height: calc(100vh - 56px);
-	overflow-y: auto;
+    padding: 36px 24px;
+    font-family: var(--poppins);
+    max-height: calc(100vh - 56px);
+    overflow-y: auto;
+
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2); /* Add a subtle shadow */
+    position: relative;
 }
+
+/* Style the "underline" element */
+.underline {
+    text-decoration: underline;
+    text-align: center;
+    padding: 10px 0; /* Add padding for better appearance */
+    margin-top: 20px; /* Adjust margin as needed */
+    color: var(--blue); /* Set the text color */
+    font-size: 18px; /* Adjust font size as needed */
+    font-weight: 600; /* Adjust font weight as needed */
+}
+
 #content main .head-title {
 	display: flex;
 	align-items: center;
@@ -344,68 +353,36 @@ body {
 	grid-gap: 10px;
 	font-weight: 500;
 }
-
-#content main .box-info {
+.underline {
+    text-decoration: underline;
+}
+#content main .product-info {
     display: flex;
-    flex-wrap: wrap;
+    align-items: center;
     justify-content: space-between;
     margin-top: 36px;
-    grid-gap: 24px;
-}
-#content main .box-info li {
-    flex-basis: calc(25% - 24px);
-    padding: 24px;
-    background: var(--light);
-    border-radius: 20px;
-    display: flex;
-    flex-direction: column; /* Stack the contents vertically */
-    align-items: center; /* Center the contents horizontally */
-    text-align: center; /* Center text horizontally */
-    margin-bottom: 24px; /* Add margin to separate rows */
-}
-#content main .box-info li .bx {
-	width: 100px;
-	height: 100px;
-	border-radius: 10px;
-	font-size: 36px;
-	display: flex;
-	justify-content: center;
-	align-items: center;
-}
-#content main .box-info li .text h3 {
-	font-size: 24px;
-	font-weight: 600;
-	color: var(--dark);
-}
-#content main .box-info li .text p {
-	color: var(--dark);	
-    margin-top: 5px; /* Add spacing between text and link */
-
-}
-.box-info li .text {
-    flex: 1;
-    display: flex;
-    flex-direction: column; /* Stack the contents vertically */
-    justify-content: center; /* Center the contents vertically */
 }
 
-#content.box-info li .text h5 {
-    font-size: 24px;
-    font-weight: 600;
-    color: var(--dark);
-    margin-top: 10px; /* Add spacing between title and other text */
+#content main .product-info img {
+    width: 100%;
+    max-width: 300px; /* You can adjust the max-width as needed */
+    height: auto;
+    margin-right: 24px; /* Add spacing between the image and text */
 }
 
-.box-info li .text p {
-    color: var(--dark);
-    margin-top: 5px; /* Add spacing between text and link */
+#content main .product-info .text {
+    flex-grow: 1;
+    text-align: left;
+}
+/* Add styles for the content border */
+#content main .content-border {
+    border: 2px solid var(--blue); /* Add border properties */
+    border-radius: 10px; /* Adjust border radius as needed */
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2); /* Add a subtle shadow */
+    padding: 20px; /* Add padding inside the border */
+    margin-top: 20px; /* Add margin to separate from above content */
 }
 
-.box-info li .text a {
-    color: var(--blue); /* Style the link color */
-    text-decoration: underline; /* Add underline to the link */
-    margin-top: 10px; /* Add spacing between text and link */
-}
 
 @media screen and (max-width: 768px) {
 	#sidebar {
@@ -452,9 +429,6 @@ body {
 		display: none;
 	}
 
-	#content main .box-info {
-		grid-template-columns: 1fr;
-	}
 }
 	</style>
 </head>
@@ -469,7 +443,7 @@ body {
 		</a>
 		<ul class="side-menu top">
 			<li class="active">
-				<a href="#">
+				<a href="Dashboard.html">
 					<i class='bx bxs-dashboard' ></i>
 					<span class="text">Home</span>
 				</a>
@@ -546,35 +520,31 @@ body {
 		<main>
 			<div class="head-title">
 				<div class="left">
-					<h1>BUY/SELL</h1>
+					<h1>Job Role
+
+</h1>
 				</div>
-			
-                <a href="{{ url_for('sell_item') }}" class="btn-download">
-                    <span class="text">SELL YOUR ITEM HERE</span>
+				<a href="sell_ITem.html" class="btn-download">
+					<span class="text">Give/Sell the product</span>
 				</a>
 			</div>
-
-			<ul class="box-info">
-                {% for item in items %}
-				<li>
-                    
-                    <div class="card">
-						<img src="{{item[4]}}" alt="Please Upload an Image" class="product-image">
+            <div class="content-border">
+            <div class="product-info">
+					<img src="path_to_your_image3.jpg" alt="Please Upload an Image">
 					<span class="text">
-						<h5>{{ item[1] }}</h5>
-						<p> {{ item[2] }}</p>
-                        <p>{{ item[3] }}</p>
-                        <a class="product-link" href="{{ url_for('view_product', item_id=item[0]) }}">View Product</a>
+						<h3>Name:Job_name</h3><br>
+                        <p>salary:$20</p><br>
+                        <h5>Recruiter:Sowmya</h5><br><br>
+                        <P><h3>Description:</h3>
+                        xbshjdhsbchjssdmcbdxhcbxdjcbxdcvjfhbvnxvjcnvbcmnv cnvbcxjhfbd</P><br>
+                        <a href="recruiter profile access">View Boss Profile</a><br>
 					</span>
-                    {% endfor %}
-				</li> 
-			</ul>
-           
-
-    <!-- Add a button to view your item posts -->
-    <a class="view-my-items-button" href="{{ url_for('my_items') }}">View My Item Posts</a>
-
+                </div>
+        </div>
 		</main>
+        <div class="underline">
+            <a href="Go to Hire or get hired">Back</a>
+        </div>
 		<!-- MAIN -->
 	</section>
 	<!-- CONTENT -->
@@ -659,4 +629,3 @@ switchMode.addEventListener('change', function () {
 </script>
 </body>
 </html>
-{% endblock %}

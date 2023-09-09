@@ -1,0 +1,73 @@
+/* Reset default margin and padding for all elements */
+* {
+    margin: 0;
+    padding: 0;
+  }
+  
+  /* Apply a background color to the body */
+  body {
+    background-color: #f0f0f0;
+  }
+  
+  /* Style the main container */
+  .main {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    flex-wrap: wrap;
+    max-width: 800px; /* Adjust this as needed */
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #fff;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  }
+  
+  /* Style the left side containing the image */
+  #first {
+    flex: 1;
+    padding: 20px;
+  }
+  
+  #photo {
+    max-width: 100%;
+    height: auto;
+  }
+  
+  /* Style the right side containing user details */
+  #second {
+    flex: 2;
+    padding: 20px;
+    text-align: left;
+  }
+  
+  /* Style the user details */
+  #matter {
+    border-left: 2px solid #333;
+    padding-left: 20px;
+  }
+  
+  h1 {
+    font-size: 24px;
+    margin-bottom: 20px;
+  }
+  
+  p {
+    font-size: 16px;
+    margin-bottom: 10px;
+  }
+  
+  /* Style the "Go to Dashboard" button */
+  a {
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: #007bff; /* You can change this color */
+    color: #fff;
+    text-decoration: none;
+    margin-top: 20px;
+  }
+  
+  /* Hover effect for the button */
+  a:hover {
+    background-color: #0056b3; /* You can change this color */
+  }
+  

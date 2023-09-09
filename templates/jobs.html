@@ -1,5 +1,5 @@
 
-
+{% block content %}
 <!DOCTYPE html>
 <html>
 <head>
@@ -321,6 +321,8 @@ body {
 }
 #head{
     font-size: 50px;
+    margin-top: 20px;
+    margin-left: 10px;
 }
 /* NAVBAR */
 button.job{
@@ -334,24 +336,29 @@ button.job{
 div.jobs{
 margin-left: 120px;
 border:2px solid black;
-width:700px;
-height:230px;
+width:800px;
+height:240px;
 margin-top:20px;
 border-radius: 10px;
 background-color: white;
 }
 .name,.skill,.duration{
-    margin:5px;
-    padding:5px;
-    font-size: 25px;
+    margin:9px;
+    padding:9px;
+    font-size: 23px;
+    
 }
 a#view-details{
     position:relative;
-    left:600px;
+    left:800px;
 }
-button#next-button{
+button#view-details{
     padding: 5px;
-    
+    margin-top:5px;
+    position: relative;
+    left: 670px;
+    padding:10px;
+    border-radius: 10px;
 }
     </style>
 </head>
@@ -435,24 +442,23 @@ button#next-button{
 			</a>
 		</nav>
        <section class="matter">
-        {% block content %}
-        <span id="head">Available Jobs</span><hr width="500px">
+        
+        <div id="head">&emsp;Available Jobs</div><hr width="500px">
         <br>
-        <button class="job"><a href="{{ url_for('my_jobs') }}">Get Hired</a></button>
-        <button class="job"><a href="{{ url_for('post_job') }}">Post a Job</a></button>
+        <button class="job"><a href="{{ url_for('my_jobs') }}">Jobs Posted</a></button>
+        <button class="job"><a href="{{ url_for('post_job') }}" style="z-index: 999;">Post a Job</a></button>
         <ul>
             
             {% for job in job_postings %}
-                <div class="jobs">
-                    <div class="name">{{ job[1] }}</div><br>
-                <div class="skill">Skills: {{ job[2] }}</div><br>
+            <div class="jobs">
+                <div class="name">{{ job[1] }}</div>
+                <div class="skill">Skills: {{ job[2] }}</div>
                 <div class="duration">Duration: {{ job[4] }}</div>
-                 <br>
                 <!-- Add a "View Details" button with a link to the details page -->
-               <a href="{{ url_for('job_details', job_id=job[0]) }}" id="view-details">View Details</a>
-                </div>
-                
-            {% endfor %}
+                <button id="view-details"><a href="{{ url_for('job_details', job_id=job[0]) }}" class="view-details">View Details</a></button>
+            </div>
+        {% endfor %}
+        
         </ul> 
        </section>
 

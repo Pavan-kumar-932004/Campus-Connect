@@ -445,13 +445,14 @@ button#view-details{
         
         <div id="head">&emsp;Available Jobs</div><hr width="500px">
         <br>
-<<<<<<< HEAD
+
         <button class="job"><a href="{{ url_for('my_jobs') }}">Get Hired</a></button>
-        <button class="job" style:"z-index:999"><a href="{{ url_for('post_job') }}" >Post a Job</a></button>
-=======
+        <button class="job" >
+			<a href="{{ url_for('post_job') }}" >Post a Job</a></button>
+
         <button class="job"><a href="{{ url_for('my_jobs') }}">Jobs Posted</a></button>
         <button class="job"><a href="{{ url_for('post_job') }}" style="z-index: 999;">Post a Job</a></button>
->>>>>>> 287fcbcc20a6fc9bfd27f01ac1695fce386b6eed
+
         <ul>
             
             {% for job in job_postings %}

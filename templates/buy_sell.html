@@ -303,6 +303,12 @@ body {
 	left: calc(100% - (25px - 4px) - 2px);
 }
 /* NAVBAR */
+.product-image {
+    width: 150px; /* Set your desired width */
+    height: 150px; /* Set your desired height */
+    object-fit: cover; /* Maintain aspect ratio and cover the container */
+    border-radius: 10px; /* Add rounded corners if desired */
+}
 
 /* MAIN */
 #content main {
@@ -553,7 +559,7 @@ body {
 				<li>
                     
                     <div class="card">
-					<img src="path_to_your_image3.jpg" alt="Please Upload an Image">
+						<img src="{{item[4]}}" alt="Please Upload an Image" class="product-image">
 					<span class="text">
 						<h5>{{ item[1] }}</h5>
 						<p> {{ item[2] }}</p>

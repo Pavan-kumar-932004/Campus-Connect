@@ -134,16 +134,17 @@
 <body>
 <div class="wrapper" style="background-image: url('images/Background for register.png');">
     <div class="inner">
-        <form action="POST">
-            <h3><br>Enter Item Details for Sales</h3><br>
+        <form action="POST" method="POST">
+            <h3><br>Enter Item Details</h3><br>
             <div class="form-group">
                 <div class="form-wrapper">
-                    <label for="">Item Name</label><br>
-                    <input type="text" class="form-control">
+                    <label for="item_name">Item Name:</label>
+                    <input type="text" id="item_name" name="item_name" required class="form-control"><br>
                 </div>
                 <div class="form-wrapper">
-                    <label for="">Item Price</label><br>
-                    <input type="text" class="form-control">
+                    <label for="item_price">Item Price:</label>
+        <input type="number" id="item_price" name="item_price" required class="form-control"><br>
+        
                 </div>
                 <div class="form-wrapper">
                   <label for="">Description</label><br>
@@ -153,11 +154,10 @@
                     <label class="btn btn-outline-primary">Upload Item Photo<br>
                     <input type="file">
                     </label> &nbsp;<br>
-                    <button type="button" class="btn btn-default md-btn-flat">Reset</button>
-                    <div class="text-light small mt-1">Allowed JPG, GIF or PNG. Max size of 800K</div>
-                </div>
+                
+                   </div>
             </div>
-            <button type="submit" class="btn-submit">Submit</button>
+            <input type="submit" value="Add Item">
             </form>
         </div>
     </div>

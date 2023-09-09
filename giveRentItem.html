@@ -6,7 +6,8 @@
 
 	<!-- Boxicons -->
 	<link href='https://unpkg.com/boxicons@2.0.9/css/boxicons.min.css' rel='stylesheet'>
-	<title>Home page</title>
+	<title>Buy/Sell
+    </title>
 	<style>
 		@import url('https://fonts.googleapis.com/css2?family=Lato:wght@400;700&family=Poppins:wght@400;500;600;700&display=swap');
 
@@ -48,7 +49,7 @@ html {
 body.dark {
 	--light: #0C0C1E;
 	--grey: #060714;
-	--dark: #ffffff;
+	--dark: #FBFBFB;
 }
 
 body {
@@ -167,12 +168,6 @@ body {
 	display: flex;
 	justify-content: center;
 }
-/* SIDEBAR */
-
-
-
-
-
 /* CONTENT */
 #content {
 	position: relative;
@@ -183,11 +178,7 @@ body {
 #sidebar.hide ~ #content {
 	width: calc(100% - 60px);
 	left: 60px;
-}
-
-
-
-
+} 
 /* NAVBAR */
 #content nav {
 	height: 56px;
@@ -312,13 +303,10 @@ body {
 }
 /* NAVBAR */
 
-
-
-
-
 /* MAIN */
 #content main {
 	width: 100%;
+    height: 100%;
 	padding: 36px 24px;
 	font-family: var(--poppins);
 	max-height: calc(100vh - 56px);
@@ -337,23 +325,6 @@ body {
 	margin-bottom: 10px;
 	color: var(--dark);
 }
-/*#content main .head-title .left .breadcrumb {
-	display: flex;
-	align-items: center;
-	grid-gap: 16px;
-}
-#content main .head-title .left .breadcrumb li {
-	color: var(--dark);
-}
-#content main .head-title .left .breadcrumb li a {
-	color: var(--dark-grey);
-	pointer-events: none;
-}
-#content main .head-title .left .breadcrumb li a.active {
-	color: var(--blue);
-	pointer-events: unset;
-}
-*/
 #content main .head-title .btn-download {
 	height: 36px;
 	padding: 0 16px;
@@ -367,47 +338,32 @@ body {
 	font-weight: 500;
 }
 
-
-
-
 #content main .box-info {
-	display: grid;
-	grid-template-columns: repeat(align-items, minmax(240px, 1fr));
-	grid-gap: 24px;
-	margin-top: 36px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    margin-top: 36px;
+    grid-gap: 24px;
 }
 #content main .box-info li {
-	padding: 24px;
-	background: var(--light);
-	border-radius: 20px; /*roundness*/
-	display: flex;
-	align-items: center;
-	grid-gap: 24px;
+    flex-basis: calc(25% - 24px);
+    padding: 24px;
+    background: var(--light);
+    border-radius: 20px;
+    display: flex;
+    flex-direction: column; /* Stack the contents vertically */
+    align-items: center; /* Center the contents horizontally */
+    text-align: center; /* Center text horizontally */
+    margin-bottom: 24px; /* Add margin to separate rows */
 }
 #content main .box-info li .bx {
-	width: 200px;
-	height: 200px;
+	width: 100px;
+	height: 100px;
 	border-radius: 10px;
 	font-size: 36px;
 	display: flex;
 	justify-content: center;
 	align-items: center;
-}
-#content main .box-info li:nth-child(1) .bx {
-	background: var(--light-blue);
-	color: var(--blue);
-}
-#content main .box-info li:nth-child(2) .bx {
-	background: var(--light-yellow);
-	color: var(--yellow);
-}
-#content main .box-info li:nth-child(3) .bx {
-	background: var(--light-orange);
-	color: var(--orange);
-}
-#content main .box-info li:nth-child(4) .bx {
-	background: var(--light-black);
-	color: var(--black);
 }
 #content main .box-info li .text h3 {
 	font-size: 24px;
@@ -416,7 +372,34 @@ body {
 }
 #content main .box-info li .text p {
 	color: var(--dark);	
+    margin-top: 5px; /* Add spacing between text and link */
+
 }
+.box-info li .text {
+    flex: 1;
+    display: flex;
+    flex-direction: column; /* Stack the contents vertically */
+    justify-content: center; /* Center the contents vertically */
+}
+
+#content.box-info li .text h5 {
+    font-size: 24px;
+    font-weight: 600;
+    color: var(--dark);
+    margin-top: 10px; /* Add spacing between title and other text */
+}
+
+.box-info li .text p {
+    color: var(--dark);
+    margin-top: 5px; /* Add spacing between text and link */
+}
+
+.box-info li .text a {
+    color: var(--blue); /* Style the link color */
+    text-decoration: underline; /* Add underline to the link */
+    margin-top: 10px; /* Add spacing between text and link */
+}
+
 @media screen and (max-width: 768px) {
 	#sidebar {
 		width: 200px;
@@ -465,16 +448,6 @@ body {
 	#content main .box-info {
 		grid-template-columns: 1fr;
 	}
-
-	#content main .table-data .head {
-		min-width: 420px;
-	}
-	#content main .table-data .order table {
-		min-width: 420px;
-	}
-	#content main .table-data .todo .todo-list {
-		min-width: 420px;
-	}
 }
 	</style>
 </head>
@@ -507,7 +480,7 @@ body {
 				</a>
 			</li>
 			<li>
-				<a href="../Campus-Connect/templates/jobs.html">
+				<a href="#">
 					<i class='bx bxs-doughnut-chart' ></i>
 					<span class="text">Hire /Get Hired</span>
 				</a>
@@ -566,50 +539,53 @@ body {
 		<main>
 			<div class="head-title">
 				<div class="left">
-					<h1>Home</h1>
-					<!--<ul class="breadcrumb">
-						<li>
-							<a href="#">Dashboard</a>
-						</li>
-						<li><i class='bx bx-chevron-right' ></i></li>
-						<li>
-							<a class="active" href="#">Home</a>
-						</li>
-					</ul>-->
+					<h1>BUY/SELL</h1>
 				</div>
-				<a href="#" class="btn-download">
-					<i class='bx bxs-cloud-download' ></i>
-					<span class="text">Download Your Details</span>
+				<a href="templates/sell_item.html" class="btn-download">
+					<span class="text">SELL YOUR ITEM HERE</span>
 				</a>
 			</div>
 
 			<ul class="box-info">
 				<li>
-					<i class='bx bxs-calendar-check' ></i>
+					<img src="path_to_your_image3.jpg" alt="Please Upload an Image">
 					<span class="text">
-						<h3>Buy/Sell</h3>
-						<p>Buy your required product!!!</p>
+						<h5>Pencil</h5>
+						<p>Price</p>
+                        <a href="https://example.com">View Product</a>
+
 					</span>
 				</li>
 				<li>
-					<i class='bx bxs-group' ></i>
+					<img src="path_to_your_image3.jpg" alt="Please Upload an Image">
 					<span class="text">
-						<h3>Rent/Give</h3>
-						<p>Rent the product for few hours</p>
+						<h5>Pencil</h5>
+						<p>Price</p>
+                        <a href="https://example.com">View Product</a>
 					</span>
 				</li>
 				<li>
-					<i class='bx bxs-dollar-circle' ></i>
+					<img src="path_to_your_image3.jpg" alt="Please Upload an Image">
 					<span class="text">
-						<h3>Hire/Get Hired</h3>
-						<p>Hire the fittest or Try to get hired</p>
+						<h5>Pencil</h5>
+						<p>Price</p>
+                        <a href="https://example.com">View Product</a>
 					</span>
 				</li>
 				<li>
-					<i class='bx bxs-dollar-circle' ></i>
+					<img src="path_to_your_image3.jpg" alt="Please Upload an Image">
 					<span class="text">
-						<h3>Share Vehicle</h3>
-						<p>You dont need to wait for vehicle now!!</p>
+						<h5>Pencil</h5>
+						<p>Price</p>
+                        <a href="https://example.com">View Product</a>
+					</span>
+				</li>
+                <li>
+					<img src="path_to_your_image3.jpg" alt="Please Upload an Image">
+					<span class="text">
+						<h5>Pencil</h5>
+						<p>Price</p>
+                        <a href="https://example.com">View Product</a>
 					</span>
 				</li>
 			</ul>

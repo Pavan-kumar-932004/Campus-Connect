@@ -6,7 +6,8 @@
 
 	<!-- Boxicons -->
 	<link href='https://unpkg.com/boxicons@2.0.9/css/boxicons.min.css' rel='stylesheet'>
-	<title>Home page</title>
+	<title>Buy/Sell
+    </title>
 	<style>
 		@import url('https://fonts.googleapis.com/css2?family=Lato:wght@400;700&family=Poppins:wght@400;500;600;700&display=swap');
 
@@ -167,12 +168,6 @@ body {
 	display: flex;
 	justify-content: center;
 }
-/* SIDEBAR */
-
-
-
-
-
 /* CONTENT */
 #content {
 	position: relative;
@@ -183,11 +178,7 @@ body {
 #sidebar.hide ~ #content {
 	width: calc(100% - 60px);
 	left: 60px;
-}
-
-
-
-
+} 
 /* NAVBAR */
 #content nav {
 	height: 56px;
@@ -312,19 +303,31 @@ body {
 }
 /* NAVBAR */
 
-
-
-
-
 /* MAIN */
+/* Add a border around the main section */
 #content main {
-	width: 100%;
-	height:100%;
-	padding: 36px 24px;
-	font-family: var(--poppins);
-	max-height: calc(100vh - 56px);
-	overflow-y: auto;
+    width: 100%;
+    height: 100%;
+    padding: 36px 24px;
+    font-family: var(--poppins);
+    max-height: calc(100vh - 56px);
+    overflow-y: auto;
+
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2); /* Add a subtle shadow */
+    position: relative;
 }
+
+/* Style the "underline" element */
+.underline {
+    text-decoration: underline;
+    text-align: center;
+    padding: 10px 0; /* Add padding for better appearance */
+    margin-top: 20px; /* Adjust margin as needed */
+    color: var(--blue); /* Set the text color */
+    font-size: 18px; /* Adjust font size as needed */
+    font-weight: 600; /* Adjust font weight as needed */
+}
+
 #content main .head-title {
 	display: flex;
 	align-items: center;
@@ -338,23 +341,6 @@ body {
 	margin-bottom: 10px;
 	color: var(--dark);
 }
-/*#content main .head-title .left .breadcrumb {
-	display: flex;
-	align-items: center;
-	grid-gap: 16px;
-}
-#content main .head-title .left .breadcrumb li {
-	color: var(--dark);
-}
-#content main .head-title .left .breadcrumb li a {
-	color: var(--dark-grey);
-	pointer-events: none;
-}
-#content main .head-title .left .breadcrumb li a.active {
-	color: var(--blue);
-	pointer-events: unset;
-}
-*/
 #content main .head-title .btn-download {
 	height: 36px;
 	padding: 0 16px;
@@ -367,57 +353,37 @@ body {
 	grid-gap: 10px;
 	font-weight: 500;
 }
+.underline {
+    text-decoration: underline;
+}
+#content main .product-info {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: 36px;
+}
+
+#content main .product-info img {
+    width: 100%;
+    max-width: 300px; /* You can adjust the max-width as needed */
+    height: auto;
+    margin-right: 24px; /* Add spacing between the image and text */
+}
+
+#content main .product-info .text {
+    flex-grow: 1;
+    text-align: left;
+}
+/* Add styles for the content border */
+#content main .content-border {
+    border: 2px solid var(--blue); /* Add border properties */
+    border-radius: 10px; /* Adjust border radius as needed */
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2); /* Add a subtle shadow */
+    padding: 20px; /* Add padding inside the border */
+    margin-top: 20px; /* Add margin to separate from above content */
+}
 
 
-
-
-#content main .box-info {
-	display: grid;
-	grid-template-columns: repeat(align-items, minmax(240px, 1fr));
-	grid-gap: 24px;
-	margin-top: 36px;
-}
-#content main .box-info li {
-	padding: 24px;
-	background: var(--light);
-	border-radius: 20px; /*roundness*/
-	display: flex;
-	align-items: center;
-	grid-gap: 24px;
-}
-#content main .box-info li .bx {
-	width: 200px;
-	height: 200px;
-	border-radius: 10px;
-	font-size: 36px;
-	display: flex;
-	justify-content: center;
-	align-items: center;
-}
-#content main .box-info li:nth-child(1) .bx {
-	background: var(--light-blue);
-	color: var(--blue);
-}
-#content main .box-info li:nth-child(2) .bx {
-	background: var(--light-yellow);
-	color: var(--yellow);
-}
-#content main .box-info li:nth-child(3) .bx {
-	background: var(--light-orange);
-	color: var(--orange);
-}
-#content main .box-info li:nth-child(4) .bx {
-	background: var(--light-black);
-	color: var(--black);
-}
-#content main .box-info li .text h3 {
-	font-size: 24px;
-	font-weight: 600;
-	color: var(--dark);
-}
-#content main .box-info li .text p {
-	color: var(--dark);	
-}
 @media screen and (max-width: 768px) {
 	#sidebar {
 		width: 200px;
@@ -463,39 +429,6 @@ body {
 		display: none;
 	}
 
-	#content main .box-info {
-		grid-template-columns: 1fr;
-	}
-
-	#content main .table-data .head {
-		min-width: 420px;
-	}
-	#content main .table-data .order table {
-		min-width: 420px;
-	}
-	#content main .table-data .todo .todo-list {
-		min-width: 420px;
-	}
-}
-.share_vehicle{
-	font-size:30px;
-	border:3px solid black;
-	width:1000px;
-	background:White;
-    padding:20px;
-	border-radius:30px;
-}
-.Available_Vehicles{
-	font-size:20px;
-	border:1px solid black;
-	width:1000px;
-	background:White;
-	margin-top:30px;
-	border-radius:10px;
-	padding:5px;
-	height:150px;
-
-}
 }
 	</style>
 </head>
@@ -510,7 +443,7 @@ body {
 		</a>
 		<ul class="side-menu top">
 			<li class="active">
-				<a href="#">
+				<a href="Dashboard.html">
 					<i class='bx bxs-dashboard' ></i>
 					<span class="text">Home</span>
 				</a>
@@ -584,57 +517,36 @@ body {
 		<!-- NAVBAR -->
 
 		<!-- MAIN -->
-		<div class="share_vehicle">
-		<h1><center><Share Vehicle</center></h1>
-    <a href="{{ url_for('my_rides') }}" class="btn btn-primary"><center><font-color="#562465">My Rides</font></center></a>
-    <!-- Form to post vehicle availability -->
-    <form method="POST" action="/share_vehicle">
-		<table allign="center"> 
-			<tr>
-        	<td><label for="start_location">End Location:</label></td>
-        	<td><input type="text" id="start_location" name="start_location" required><br></td>
-			</tr>
-			<tr>
-				<td><label for="start_time">Start Time:</label></td>
-					<td><input type="text" id="start_time" name="start_time" required><br></td>
-			</tr>
-			<tr>
-				<td><label for="price">Price:</label></td>
-					<td><input type="text" id="price" name="price" required><br></td>
-			</tr>
-			<tr>
-			<td><label for="price">Bike Number:</label></td>
-			<td><input type="text" id="Bike Number" name="Bike Number" required><br></td>
-			</tr>
-			<tr>
-			<td><label for="price">Bike Company:</label></td>
-        	<td><input type="text" id="Bike Company" name="Bike Company" required><br></td>
-			</tr>
-			<tr>
-			<td><input type="submit" value="Share Vehicle"></td>
-			</table>
-    </form>
-</div>
-<br>
-<h2><center><margin="5px">Available Vehicles</margin></center></h2>
-<table>
-	<tr>
-    <ul>
-        {% for ride in rides %}
-		<div class="Available_Vehicles">
-            <li>Location: {{ ride[1] }}</li>
-			<li>Time: {{ ride[2] }}</li>
-			<li>Price: {{ ride[3] }}</li>
-            <li>Posted by: {{ ride[4] }}</li>
-            <li><a href="{{ url_for('sharer_profile', seller_name=ride[4]) }}">View Details about Ride Provider</a></li><br>
-        {% endfor %}
-    </ul>
-    </tr>
- </table>
-</div>
+		<main>
+			<div class="head-title">
+				<div class="left">
+					<h1>Product Title</h1>
+				</div>
+				<a href="sell_ITem.html" class="btn-download">
+					<span class="text">Give/Sell the product</span>
+				</a>
+			</div>
+            <div class="content-border">
+            <div class="product-info">
+					<img src="path_to_your_image3.jpg" alt="Please Upload an Image">
+					<span class="text">
+						<h3>Name:Pencil</h3><br>
+                        <p>Price:$20</p><br>
+                        <h5>Seller:Sowmya</h5><br><br>
+                        <P><h3>Description:</h3>
+                        xbshjdhsbchjssdmcbdxhcbxdjcbxdcvjfhbvnxvjcnvbcmnv cnvbcxjhfbd</P><br>
+                        <a href="https://example.com">View Seller Profile</a><br>
+					</span>
+                </div>
+        </div>
+		</main>
+        <div class="underline">
+            <a href="https://example.com">Back to items for sale</a>
+        </div>
 		<!-- MAIN -->
 	</section>
 	<!-- CONTENT -->
+	
 
 	<script>const allSideMenu = document.querySelectorAll('#sidebar .side-menu.top li a');
 

@@ -345,9 +345,10 @@ background-color: white;
     font-size: 23px;
     
 }
-a#view-details{
+a#delete{
     position:relative;
     left:800px;
+    font-size: larger;
 }
 button#delete{
     padding: 5px;
@@ -356,6 +357,13 @@ button#delete{
     width:300px;
     padding:10px;
     border-radius: 10px;
+}
+#dash-back{
+    margin-left: 120px;
+    margin-top: 20px;
+    padding:20px;
+    background-color: white;
+    border-radius: 15%;
 }
 /* NAVBAR */
     </style>
@@ -461,7 +469,8 @@ button#delete{
     </ul>
 
     <!-- Add a link to go back to the dashboard or other pages -->
-    <a href="{{ url_for('dashboard') }}">Back to Dashboard</a>
+    <button id="dash-back"><a href="{{ url_for('dashboard') }}">Back to Dashboard</a></button>
+    </section>
 </body>
 <script>
     const searchButton = document.querySelector('#content nav form .form-input button');

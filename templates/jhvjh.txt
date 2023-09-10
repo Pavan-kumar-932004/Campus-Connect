@@ -1,0 +1,5 @@
+{{ url_for('dashboard') }}
+{{ url_for('buy_sell') }}
+{{ url_for('buy_rent') }}
+{{ url_for('jobs') }}
+{{ url_for('share_vehicle') }}

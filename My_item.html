@@ -1,3 +1,29 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Buy/Sell</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='buy_Sell-styles.css') }}">
+</head>
+<body>
+    <h2 style="text-align: center; padding: 50px;">Items for Sale</h2>
+    <div class="card-container">
+        {% for item in items %}
+            <div class="card">
+                <p>{{ item[1] }} - {{ item[2] }}</p>
+                <p>Seller: {{ item[3] }}</p>
+                <a class="product-link" href="{{ url_for('view_product', item_id=item[0]) }}">View Product</a>
+            </div>
+        {% endfor %}
+    </div>
+    <a class="sell-button" href="{{ url_for('sell_item') }}">Sell an Item</a>
+
+    <!-- Add a button to view your item posts -->
+    <a class="view-my-items-button" href="{{ url_for('my_items') }}">View My Item Posts</a>
+</body>
+</html>
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>

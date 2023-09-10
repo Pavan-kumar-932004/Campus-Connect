@@ -6,7 +6,8 @@
 
 	<!-- Boxicons -->
 	<link href='https://unpkg.com/boxicons@2.0.9/css/boxicons.min.css' rel='stylesheet'>
-	<title>Home page</title>
+	<title>Buy/Sell
+    </title>
 	<style>
 		@import url('https://fonts.googleapis.com/css2?family=Lato:wght@400;700&family=Poppins:wght@400;500;600;700&display=swap');
 
@@ -48,7 +49,7 @@ html {
 body.dark {
 	--light: #0C0C1E;
 	--grey: #060714;
-	--dark: #ffffff;
+	--dark: #FBFBFB;
 }
 
 body {
@@ -167,12 +168,6 @@ body {
 	display: flex;
 	justify-content: center;
 }
-/* SIDEBAR */
-
-
-
-
-
 /* CONTENT */
 #content {
 	position: relative;
@@ -183,11 +178,7 @@ body {
 #sidebar.hide ~ #content {
 	width: calc(100% - 60px);
 	left: 60px;
-}
-
-
-
-
+} 
 /* NAVBAR */
 #content nav {
 	height: 56px;
@@ -311,7 +302,135 @@ body {
 	left: calc(100% - (25px - 4px) - 2px);
 }
 /* NAVBAR */
-</style>
+
+/* MAIN */
+/* Add a border around the main section */
+#content main {
+    width: 100%;
+    height: 100%;
+    padding: 36px 24px;
+    font-family: var(--poppins);
+    max-height: calc(100vh - 56px);
+    overflow-y: auto;
+
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2); /* Add a subtle shadow */
+    position: relative;
+}
+
+/* Style the "underline" element */
+.underline {
+    text-decoration: underline;
+    text-align: center;
+    padding: 10px 0; /* Add padding for better appearance */
+    margin-top: 20px; /* Adjust margin as needed */
+    color: var(--blue); /* Set the text color */
+    font-size: 18px; /* Adjust font size as needed */
+    font-weight: 600; /* Adjust font weight as needed */
+}
+
+#content main .head-title {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	grid-gap: 16px;
+	flex-wrap: wrap;
+}
+#content main .head-title .left h1 {
+	font-size: 36px;
+	font-weight: 600;
+	margin-bottom: 10px;
+	color: var(--dark);
+}
+#content main .head-title .btn-download {
+	height: 36px;
+	padding: 0 16px;
+	border-radius: 36px;
+	background: var(--blue);
+	color: var(--light);
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	grid-gap: 10px;
+	font-weight: 500;
+}
+.underline {
+    text-decoration: underline;
+}
+#content main .product-info {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: 36px;
+}
+
+#content main .product-info img {
+    width: 100%;
+    max-width: 300px; /* You can adjust the max-width as needed */
+    height: auto;
+    margin-right: 24px; /* Add spacing between the image and text */
+}
+
+#content main .product-info .text {
+    flex-grow: 1;
+    text-align: left;
+}
+/* Add styles for the content border */
+#content main .content-border {
+    border: 2px solid var(--blue); /* Add border properties */
+    border-radius: 10px; /* Adjust border radius as needed */
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2); /* Add a subtle shadow */
+    padding: 20px; /* Add padding inside the border */
+    margin-top: 20px; /* Add margin to separate from above content */
+}
+
+
+@media screen and (max-width: 768px) {
+	#sidebar {
+		width: 200px;
+	}
+
+	#content {
+		width: calc(100% - 60px);
+		left: 200px;
+	}
+
+	#content nav .nav-link {
+		display: none;
+	}
+}
+
+@media screen and (max-width: 576px) {
+	#content nav form .form-input input {
+		display: none;
+	}
+
+	#content nav form .form-input button {
+		width: auto;
+		height: auto;
+		background: transparent;
+		border-radius: none;
+		color: var(--dark);
+	}
+
+	#content nav form.show .form-input input {
+		display: block;
+		width: 100%;
+	}
+	#content nav form.show .form-input button {
+		width: 36px;
+		height: 100%;
+		border-radius: 0 36px 36px 0;
+		color: var(--light);
+		background: var(--red);
+	}
+
+	#content nav form.show ~ .notification,
+	#content nav form.show ~ .profile {
+		display: none;
+	}
+
+}
+	</style>
 </head>
 <body>
 
@@ -330,7 +449,7 @@ body {
 				</a>
 			</li>
 			<li>
-				<a href="giveRentItem.html">
+				<a href="#">
 					<i class='bx bxs-shopping-bag-alt' ></i>
 					<span class="text">Buy/Sell</span>
 				</a>
@@ -342,7 +461,7 @@ body {
 				</a>
 			</li>
 			<li>
-				<a href="../Campus-Connect/templates/jobs.html">
+				<a href="#">
 					<i class='bx bxs-doughnut-chart' ></i>
 					<span class="text">Hire /Get Hired</span>
 				</a>
@@ -398,3 +517,116 @@ body {
 		<!-- NAVBAR -->
 
 		<!-- MAIN -->
+		<main>
+			<div class="head-title">
+				<div class="left">
+					<h1>{{ job_details[1] }}
+
+</h1>
+				</div>
+				<a href="sell_ITem.html" class="btn-download">
+					<span class="text">Give/Sell the product</span>
+				</a>
+			</div>
+            <div class="content-border">
+            <div class="product-info">
+	
+					<span class="text">
+						<h3>{{ job_details[1] }}</h3><br>
+                        <p>Skills: {{ job_details[2] }}</p>
+						<p>Description: {{ job_details[3] }}</p>
+						<p>Duration: {{ job_details[4] }}</p>
+                        <a href="{{ url_for('hire_person_details', seller_name=job_details[5]) }}">View Seller Profile</a>
+
+					</span>
+                </div>
+        </div>
+		<a href="{{ url_for('jobs') }}">Back to Jobs</a>
+		</main>
+        <div class="underline">
+            <a href="Go to Hire or get hired">Back</a>
+        </div>
+		<!-- MAIN -->
+	</section>
+	<!-- CONTENT -->
+	
+
+	<script>const allSideMenu = document.querySelectorAll('#sidebar .side-menu.top li a');
+
+allSideMenu.forEach(item=> {
+	const li = item.parentElement;
+
+	item.addEventListener('click', function () {
+		allSideMenu.forEach(i=> {
+			i.parentElement.classList.remove('active');
+		})
+		li.classList.add('active');
+	})
+});
+
+
+
+
+// TOGGLE SIDEBAR
+const menuBar = document.querySelector('#content nav .bx.bx-menu');
+const sidebar = document.getElementById('sidebar');
+
+menuBar.addEventListener('click', function () {
+	sidebar.classList.toggle('hide');
+})
+
+
+
+
+
+
+
+const searchButton = document.querySelector('#content nav form .form-input button');
+const searchButtonIcon = document.querySelector('#content nav form .form-input button .bx');
+const searchForm = document.querySelector('#content nav form');
+
+searchButton.addEventListener('click', function (e) {
+	if(window.innerWidth < 576) {
+		e.preventDefault();
+		searchForm.classList.toggle('show');
+		if(searchForm.classList.contains('show')) {
+			searchButtonIcon.classList.replace('bx-search', 'bx-x');
+		} else {
+			searchButtonIcon.classList.replace('bx-x', 'bx-search');
+		}
+	}
+})
+
+
+
+
+
+if(window.innerWidth < 768) {
+	sidebar.classList.add('hide');
+} else if(window.innerWidth > 576) {
+	searchButtonIcon.classList.replace('bx-x', 'bx-search');
+	searchForm.classList.remove('show');
+}
+
+
+window.addEventListener('resize', function () {
+	if(this.innerWidth > 576) {
+		searchButtonIcon.classList.replace('bx-x', 'bx-search');
+		searchForm.classList.remove('show');
+	}
+})
+
+
+
+const switchMode = document.getElementById('switch-mode');
+
+switchMode.addEventListener('change', function () {
+	if(this.checked) {
+		document.body.classList.add('dark');
+	} else {
+		document.body.classList.remove('dark');
+	}
+})
+</script>
+</body>
+</html>

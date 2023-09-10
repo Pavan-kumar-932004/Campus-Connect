@@ -44,7 +44,9 @@ def create_items_table():
         id INT AUTO_INCREMENT PRIMARY KEY,
         item_name VARCHAR(255),
         item_price DECIMAL(10, 2),
-        seller_name VARCHAR(255)
+        seller_name VARCHAR(255),
+        productphoto VARCHAR(255),
+        descr VARCHAR(2000)
     )
     """
     cursor.execute(query)
@@ -55,7 +57,9 @@ def create_rent_table():
         id INT AUTO_INCREMENT PRIMARY KEY,
         item_name VARCHAR(255),
         item_price DECIMAL(10, 2),
-        seller_name VARCHAR(255)
+        seller_name VARCHAR(255),
+        productphoto VARCHAR(255),
+        descr VARCHAR(2000)
     )
     """
     cursor.execute(query)
@@ -188,17 +192,25 @@ def user_profile():
 
 @app.route('/seller_profile/<string:seller_name>')
 def seller_profile(seller_name):
-    # Fetch seller's details from the database based on seller_name
-    query = "SELECT * FROM users WHERE fullname = %s"
-    cursor.execute(query, (seller_name,))
-    seller_details = cursor.fetchone()
+    try:
+        cursor=db.cursor()
+        # Fetch seller's details from the database based on seller_name
+        query = "SELECT * FROM users WHERE fullname = %s"
+        cursor.execute(query, (seller_name,))
+        seller_details = cursor.fetchone()
 
-    if seller_details:
-        return render_template('seller_profile.html', seller=seller_details)
-    else:
-        flash("Seller details not found.", 'error')
+        if seller_details:
+            cursor.fetchall()
+            return render_template('seller_profile.html', seller=seller_details)
+        else:
+            flash("Seller details not found.", 'error')
+            return redirect(url_for('buy_sell'))
+    except Exception as e:
+        flash("An error occurred while fetching seller details.", 'error')
         return redirect(url_for('buy_sell'))
-
+    finally:
+        # Close the cursor
+        cursor.close()
 
 @app.route('/hire_person_details/<string:seller_name>')
 def hire_person_details(seller_name):
@@ -238,23 +250,42 @@ def sell_item():
     if request.method == 'POST':
         item_name = request.form['item_name']
         item_price = request.form['item_price']
-        
+        productphoto = request.files['productphoto']
+        fullname = session.get('logged_in_fullname')
+        descr=request.form['descr']
+
         # Insert item details into the database
-        query = "INSERT INTO items_for_sale (item_name, item_price, seller_name) VALUES (%s, %s, %s)"
-        cursor.execute(query, (item_name, item_price, logged_in_fullname))
-        db.commit()
+        if productphoto:
+            try:
+                current_time = datetime.now().strftime("%Y%m%d%H%M%S")
+                filename = f"{current_time}_{secure_filename(productphoto.filename)}"
 
-        flash("Item added to market!", 'success')
-        return redirect(url_for('buy_sell'))
+                # Create the directory if it doesn't exist
+                image_dir = os.path.join(app.root_path, 'static', 'uploads')
+                os.makedirs(image_dir, exist_ok=True)
 
+                # Construct the relative path
+                image_path = f"../static/uploads/{filename}"
+
+                # Save the image using the relative path
+                productphoto.save(os.path.join(image_dir, filename).replace("\\", "/"))
+
+                
+                query = "INSERT INTO items_for_sale (item_name, item_price, seller_name,productphoto, descr) VALUES (%s, %s, %s,%s, %s)"
+                cursor.execute(query, (item_name, item_price, fullname ,image_path, descr))
+                db.commit()
+                return redirect(url_for('buy_sell'))
+            except Exception as e:
+                flash(f"Error: {str(e)}", 'error')
     return render_template('sell_item.html')
 
-@app.route('/view_my_item/<int:item_id>')
+
 
 @app.route('/my_items')
 def my_items():
     user_id = session.get('user_id')  # Get the user's ID from the session
     if user_id:
+
         # Fetch items posted by the user from the items_for_sale table
         query = "SELECT * FROM items_for_sale WHERE seller_name = %s"
         cursor.execute(query, (logged_in_fullname,))
@@ -311,21 +342,41 @@ def give_rent_item():
     if request.method == 'POST':
         item_name = request.form['item_name']
         item_price = request.form['item_price']
-        
+        productphoto = request.files['productphoto']
+        fullname=session.get('logged_in_fullname')
+        descr=request.form['descr']
         # Insert item details into the database
-        query = "INSERT INTO rental_items (item_name, item_price, seller_name) VALUES (%s, %s, %s)"
-        cursor.execute(query, (item_name, item_price, logged_in_fullname))
-        db.commit()
+        if productphoto:
+            try:
+                current_time = datetime.now().strftime("%Y%m%d%H%M%S")
+                filename = f"{current_time}_{secure_filename(productphoto.filename)}"
 
-        flash("Item added to market!", 'success')
-        return redirect(url_for('buy_rent'))
+                # Create the directory if it doesn't exist
+                image_dir = os.path.join(app.root_path, 'static', 'uploads')
+                os.makedirs(image_dir, exist_ok=True)
 
+                # Construct the relative path
+                image_path = f"../static/uploads/{filename}"
+
+                # Save the image using the relative path
+                productphoto.save(os.path.join(image_dir, filename).replace("\\", "/"))
+
+                
+                query = "INSERT INTO rental_items (item_name, item_price, seller_name,productphoto, descr) VALUES (%s, %s, %s,%s, %s)"
+                cursor.execute(query, (item_name, item_price, fullname ,image_path, descr))
+                db.commit()
+                return redirect(url_for('buy_rent'))
+            except Exception as e:
+                flash(f"Error: {str(e)}", 'error')
     return render_template('give_rent_item.html')
+
+
 @app.route('/my_rental_items')
 def my_rental_items():
+    fullname=session.get('logged_in_fullname')
     # Fetch rental items posted by the user from the rental_items table
     query = "SELECT * FROM rental_items WHERE seller_name = %s"
-    cursor.execute(query, (logged_in_fullname,))
+    cursor.execute(query, (fullname,))
     user_rental_items = cursor.fetchall()
 
     return render_template('my_rental_items.html', user_rental_items=user_rental_items)
@@ -429,6 +480,9 @@ def share_vehicle():
         seller_name = logged_in_fullname
 
         try:
+            # Open a new cursor and connect it to the database
+            cursor = db.cursor()
+
             # Insert the ride details into the rides table
             query = "INSERT INTO rides (start_location, start_time, price, seller_name) VALUES (%s, %s, %s, %s)"
             cursor.execute(query, (start_location, start_time, price, seller_name))
@@ -439,61 +493,70 @@ def share_vehicle():
             db.rollback()  # Roll back the transaction in case of an error
             flash("An error occurred while posting vehicle availability.", 'error')
             return redirect(url_for('share_vehicle'))
+        finally:
+            # Close the cursor
+            cursor.close()
     else:
         # Fetch ride details from the rides table
+        cursor = db.cursor()
         query = "SELECT * FROM rides"
         cursor.execute(query)
         rides = cursor.fetchall()
+        cursor.close()  # Close the cursor when done with the query
 
         return render_template('share_vehicle.html', rides=rides)
 
 @app.route('/sharer_profile/<string:seller_name>')
 def sharer_profile(seller_name):
     try:
+        cursor = db.cursor()
         # Fetch seller's details from the database based on seller_name
-        query = "SELECT * FROM users WHERE fullname= %s"
+        query = "SELECT * FROM users WHERE fullname = %s"
         cursor.execute(query, (seller_name,))
-        seller_details = cursor.fetchall()
+        seller_details = cursor.fetchone()
 
         if seller_details:
+            # Fetching the result ensures there are no unread results
+            cursor.fetchall()
             return render_template('sharer_profile.html', seller=seller_details)
         else:
             flash("Seller details not found.", 'error')
             return redirect(url_for('buy_sell'))
+        
     except Exception as e:
         flash("An error occurred while fetching seller details.", 'error')
         return redirect(url_for('buy_sell'))
+    finally:
+        # Close the cursor
+        cursor.close()
+
 
 @app.route('/my_rides')
 def my_rides():
-    user_id =session.get('user_id')  # Get the user's ID from the session
-    if user_id:
-        # Fetch rides posted by the user from the rides table
+    user_fullname = session.get('logged_in_fullname')  # Get the user's fullname from the session
+    if user_fullname:
         query = "SELECT * FROM rides WHERE seller_name = %s"
-        cursor.execute(query, (logged_in_fullname,))
+        cursor.execute(query, (user_fullname,))
         user_rides = cursor.fetchall()
-
         return render_template('my_rides.html', user_rides=user_rides)
     else:
         flash("Please log in to view your posted rides.", 'error')
         return redirect(url_for('login'))
 
-
 @app.route('/delete_ride/<int:ride_id>', methods=['POST'])
 def delete_ride(ride_id):
     user_id = session.get('user_id')  # Get the user's ID from the session
     if user_id:
-        # Delete the job with the specified ID if it belongs to the user
-        query = "DELETE FROM rides WHERE id = %s AND seller_name = %s"
-        cursor.execute(query, (ride_id, logged_in_fullname))
+        # Delete the ride with the specified ID if it belongs to the user
+        query = "DELETE FROM rides WHERE id = %s"
+        cursor.execute(query, (ride_id,))
+
         db.commit()
         flash("Ride deleted successfully!", 'success')
     else:
-        flash("Please log in to delete Rides.", 'error')
+        flash("Please log in to delete rides.", 'error')
 
     return redirect(url_for('my_rides'))
-
-
 
 
 

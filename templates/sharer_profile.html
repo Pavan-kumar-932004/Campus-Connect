@@ -1,22 +1,32 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Seller Profile</title>
+    <title>User Profile</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles/user-profile.css') }}">
 </head>
 <body>
-    <h2>Seller Profile</h2>
-    <p>Name: {{ seller[1] }}</p>
-    <p>Roll Number: {{ seller[2] }}</p>
-    <p>Phone Number: {{ seller[4] }}</p>
-    <!-- Display other details as needed -->
-
-    <!-- Display the image using a relative URL -->
-    <img src="{{ url_for('static', filename=seller[6]) }}" alt="ID Card Photo">
-    <p>Image Path: {{ seller[6] }}</p>
-    <img src="c:/Users/sriyo/Desktop/Campus-Connect/static/uploads/img.png">
+     <div class="main">
+        <div class="class1" id="first">
+        <img src="{{ seller[6] }}" alt="ID Card Photo" id="photo">
+        </div>
+        
+        <div class="class1" id="second">
+            <div id="matter">
+                <h1>Sharer Profile</h1>
+        <p><strong>Full Name:</strong>{{ seller[1] }}</p>
+        <p><strong>Roll Number:</strong> {{ seller[2] }}</p>
+        <p><strong>Branch:</strong> {{ seller[3] }}</p>
+        <p><strong>Phone Number:</strong> {{ seller[4] }}</p>
+        <p><strong>Email:</strong> {{ seller[5] }}</p>
     
-    <a href="{{ url_for('view_rides') }}">Back to View Rides</a></br>
-
-    <b> If you like the deal, You can call the Ride Provider</b>
+            </div>
+        </div></div>
+   
+    <div style="margin-left: 700px;">
+    <a href="{{ url_for('share_vehicle') }}">Back to View Rides</a></br>
+</div>
+    <b style="margin-left: 600px; margin-bottom: -50px;"> If you like the deal, You can call the Ride Provider</b>
 </body>
 </html>
+
+

@@ -520,7 +520,7 @@ body {
 		<main>
 			<div class="head-title">
 				<div class="left">
-					<h1>Job Role
+					<h1>{{ job_details[1] }}
 
 </h1>
 				</div>
@@ -530,17 +530,18 @@ body {
 			</div>
             <div class="content-border">
             <div class="product-info">
-					<img src="path_to_your_image3.jpg" alt="Please Upload an Image">
+	
 					<span class="text">
-						<h3>Name:Job_name</h3><br>
-                        <p>salary:$20</p><br>
-                        <h5>Recruiter:Sowmya</h5><br><br>
-                        <P><h3>Description:</h3>
-                        xbshjdhsbchjssdmcbdxhcbxdjcbxdcvjfhbvnxvjcnvbcmnv cnvbcxjhfbd</P><br>
-                        <a href="recruiter profile access">View Boss Profile</a><br>
+						<h3>{{ job_details[1] }}</h3><br>
+                        <p>Skills: {{ job_details[2] }}</p>
+						<p>Description: {{ job_details[3] }}</p>
+						<p>Duration: {{ job_details[4] }}</p>
+                        <a href="{{ url_for('hire_person_details', seller_name=job_details[5]) }}">View Seller Profile</a>
+
 					</span>
                 </div>
         </div>
+		<a href="{{ url_for('jobs') }}">Back to Jobs</a>
 		</main>
         <div class="underline">
             <a href="Go to Hire or get hired">Back</a>

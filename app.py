@@ -45,7 +45,8 @@ def create_items_table():
         item_name VARCHAR(255),
         item_price DECIMAL(10, 2),
         seller_name VARCHAR(255),
-        productphoto VARCHAR(255)
+        productphoto VARCHAR(255),
+        descr VARCHAR(2000)
     )
     """
     cursor.execute(query)
@@ -56,7 +57,9 @@ def create_rent_table():
         id INT AUTO_INCREMENT PRIMARY KEY,
         item_name VARCHAR(255),
         item_price DECIMAL(10, 2),
-        seller_name VARCHAR(255)
+        seller_name VARCHAR(255),
+        productphoto VARCHAR(255),
+        descr VARCHAR(2000)
     )
     """
     cursor.execute(query)
@@ -249,7 +252,7 @@ def sell_item():
         item_price = request.form['item_price']
         productphoto = request.files['productphoto']
         fullname = session.get('logged_in_fullname')
-
+        descr=request.form['descr']
 
         # Insert item details into the database
         if productphoto:
@@ -268,8 +271,8 @@ def sell_item():
                 productphoto.save(os.path.join(image_dir, filename).replace("\\", "/"))
 
                 
-                query = "INSERT INTO items_for_sale (item_name, item_price, seller_name,productphoto) VALUES (%s, %s, %s,%s)"
-                cursor.execute(query, (item_name, item_price, fullname ,image_path))
+                query = "INSERT INTO items_for_sale (item_name, item_price, seller_name,productphoto, descr) VALUES (%s, %s, %s,%s, %s)"
+                cursor.execute(query, (item_name, item_price, fullname ,image_path, descr))
                 db.commit()
                 return redirect(url_for('buy_sell'))
             except Exception as e:
@@ -277,13 +280,12 @@ def sell_item():
     return render_template('sell_item.html')
 
 
-@app.route('/view_my_item/<int:item_id>')
 
 @app.route('/my_items')
 def my_items():
     user_id = session.get('user_id')  # Get the user's ID from the session
     if user_id:
-        
+
         # Fetch items posted by the user from the items_for_sale table
         query = "SELECT * FROM items_for_sale WHERE seller_name = %s"
         cursor.execute(query, (logged_in_fullname,))
@@ -340,15 +342,32 @@ def give_rent_item():
     if request.method == 'POST':
         item_name = request.form['item_name']
         item_price = request.form['item_price']
+        productphoto = request.files['productphoto']
         fullname=session.get('logged_in_fullname')
+        descr=request.form['descr']
         # Insert item details into the database
-        query = "INSERT INTO rental_items (item_name, item_price, seller_name) VALUES (%s, %s, %s)"
-        cursor.execute(query, (item_name, item_price, fullname))
-        db.commit()
+        if productphoto:
+            try:
+                current_time = datetime.now().strftime("%Y%m%d%H%M%S")
+                filename = f"{current_time}_{secure_filename(productphoto.filename)}"
 
-        flash("Item added to market!", 'success')
-        return redirect(url_for('buy_rent'))
+                # Create the directory if it doesn't exist
+                image_dir = os.path.join(app.root_path, 'static', 'uploads')
+                os.makedirs(image_dir, exist_ok=True)
 
+                # Construct the relative path
+                image_path = f"../static/uploads/{filename}"
+
+                # Save the image using the relative path
+                productphoto.save(os.path.join(image_dir, filename).replace("\\", "/"))
+
+                
+                query = "INSERT INTO rental_items (item_name, item_price, seller_name,productphoto, descr) VALUES (%s, %s, %s,%s, %s)"
+                cursor.execute(query, (item_name, item_price, fullname ,image_path, descr))
+                db.commit()
+                return redirect(url_for('buy_rent'))
+            except Exception as e:
+                flash(f"Error: {str(e)}", 'error')
     return render_template('give_rent_item.html')
 
 

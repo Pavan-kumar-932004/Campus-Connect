@@ -189,17 +189,25 @@ def user_profile():
 
 @app.route('/seller_profile/<string:seller_name>')
 def seller_profile(seller_name):
-    # Fetch seller's details from the database based on seller_name
-    query = "SELECT * FROM users WHERE fullname = %s"
-    cursor.execute(query, (seller_name,))
-    seller_details = cursor.fetchone()
+    try:
+        cursor=db.cursor()
+        # Fetch seller's details from the database based on seller_name
+        query = "SELECT * FROM users WHERE fullname = %s"
+        cursor.execute(query, (seller_name,))
+        seller_details = cursor.fetchone()
 
-    if seller_details:
-        return render_template('seller_profile.html', seller=seller_details)
-    else:
-        flash("Seller details not found.", 'error')
+        if seller_details:
+            cursor.fetchall()
+            return render_template('seller_profile.html', seller=seller_details)
+        else:
+            flash("Seller details not found.", 'error')
+            return redirect(url_for('buy_sell'))
+    except Exception as e:
+        flash("An error occurred while fetching seller details.", 'error')
         return redirect(url_for('buy_sell'))
-
+    finally:
+        # Close the cursor
+        cursor.close()
 
 @app.route('/hire_person_details/<string:seller_name>')
 def hire_person_details(seller_name):
@@ -275,6 +283,7 @@ def sell_item():
 def my_items():
     user_id = session.get('user_id')  # Get the user's ID from the session
     if user_id:
+        
         # Fetch items posted by the user from the items_for_sale table
         query = "SELECT * FROM items_for_sale WHERE seller_name = %s"
         cursor.execute(query, (logged_in_fullname,))
@@ -331,21 +340,24 @@ def give_rent_item():
     if request.method == 'POST':
         item_name = request.form['item_name']
         item_price = request.form['item_price']
-        
+        fullname=session.get('logged_in_fullname')
         # Insert item details into the database
         query = "INSERT INTO rental_items (item_name, item_price, seller_name) VALUES (%s, %s, %s)"
-        cursor.execute(query, (item_name, item_price, logged_in_fullname))
+        cursor.execute(query, (item_name, item_price, fullname))
         db.commit()
 
         flash("Item added to market!", 'success')
         return redirect(url_for('buy_rent'))
 
     return render_template('give_rent_item.html')
+
+
 @app.route('/my_rental_items')
 def my_rental_items():
+    fullname=session.get('logged_in_fullname')
     # Fetch rental items posted by the user from the rental_items table
     query = "SELECT * FROM rental_items WHERE seller_name = %s"
-    cursor.execute(query, (logged_in_fullname,))
+    cursor.execute(query, (fullname,))
     user_rental_items = cursor.fetchall()
 
     return render_template('my_rental_items.html', user_rental_items=user_rental_items)

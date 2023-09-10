@@ -530,12 +530,12 @@ body {
             <div class="product-info">
 					<img src="path_to_your_image3.jpg" alt="Please Upload an Image">
 					<span class="text">
-						<h3>Name:Pencil</h3><br>
-                        <p>Price:$20</p><br>
-                        <h5>Seller:Sowmya</h5><br><br>
+						<h3>Name: {{ item[1] }}</h3><br>
+                        <p>Price: {{ item[2] }}</p><br>
+                        <h5>Price: {{ item[3] }}</h5><br><br>
                         <P><h3>Description:</h3>
                         xbshjdhsbchjssdmcbdxhcbxdjcbxdcvjfhbvnxvjcnvbcmnv cnvbcxjhfbd</P><br>
-                        <a href="https://example.com">View Seller Profile</a><br>
+                        <a href="{{ url_for('seller_profile', seller_name=item[3]) }}">View Seller Profile</a><br>
 					</span>
                 </div>
         </div>
